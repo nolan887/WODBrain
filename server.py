@@ -65,12 +65,8 @@ class WODWeightForm(FlaskForm):
 #     title = StringField("Movie Title", validators=[DataRequired()])
 #     submit = SubmitField("Add Movie")
 
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def home():
-    return render_template("index.html")
-
-@app.route("/add", methods=["GET", "POST"])
-def add():
     wodform = WODWeightForm()
     if wodform.validate_on_submit():
         one_rm = wodform.one_rm.data
@@ -82,7 +78,7 @@ def add():
         lift = int(wod_weight - wod_weight % 5)
         liftstring = f"For a 1RM of {one_rm}#, the recommended weight is no more than {lift}# for {wod_reps} reps."
         return render_template("wodweight.html", liftstring=liftstring)
-    return render_template("add.html", form=wodform)
+    return render_template("index.html", form=wodform)
 
 
 
