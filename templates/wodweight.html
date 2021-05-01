@@ -1,18 +1,43 @@
-{% extends 'bootstrap/base.html' %}
+{% include "_header.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block styles %}
-  {{ super() }}
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-{% endblock %}
+    <div class="section section-components  pb-10 bg-primary" style="color: #f4f5f7;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12" id="results">
+            <h2 style="color: #f4f5f7;">WOD Weight</h2>
+            <div class="col-sm">
+              <p>Use the fields below to input your known one rep max (1RM) and the amount of repetitions you are targeting for your workout.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include "_greyskew.html" %}
+    </div>
+    <div class="section section-components pb-100 bg-secondary">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12" id="calc">
+            <h2>WOD Weight</h2>
+            <div class="col-sm">
+              <p class="text-primary">Use the fields below to input your known one rep max (1RM) and the amount of repetitions you are targeting for your workout. </p>
+                  {{ wtf.quick_form(form, novalidate=True) }}
+            </div>
+          </div>
+        </div>
+      </div>
+<!--      TODO 1: MAKE THIS A PURPLE BACKGROUND SECTION ALL H1-->
+<!--      TODO 2: MAKE A JAVASCRIPT POPUP WITH THE LIFTSTRING-->
+    {% if lifstring != "" %}
+      {% include "_purpleskew.html" %}
+    </div>
+      {{ liftstring }}
+    {% endif %}
+    </div>
 
-{% block title %}Wod Weight Recommended{% endblock %}
 
-{% block content %}
-<div class="content">
-    <h1 class="heading">Recommended:</h1>
-    {{ liftstring }}
-</div>
-{% endblock %}
+
+
+
+{% include "_footer.html" %}
+

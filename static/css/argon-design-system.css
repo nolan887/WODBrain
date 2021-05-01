@@ -90,7 +90,7 @@ body {
   line-height: 1.5;
   color: #4d1979;
   text-align: left;
-  background-color: #fff;
+  background-color: #4d1979;
 }
 
 [tabindex="-1"]:focus {
@@ -4824,6 +4824,8 @@ input[type="button"].btn-block {
 }
 
 .navbar-collapse {
+  position: absolute;
+  right: 0;
   flex-basis: 100%;
   flex-grow: 1;
   align-items: center;
@@ -7356,7 +7358,7 @@ button.bg-info:focus {
 }
 
 .bg-warning {
-  background-color: #fb6340 !important;
+  background-color: #a3a9ac !important;
 }
 
 a.bg-warning:hover,
@@ -19520,7 +19522,7 @@ textarea[resize="horizontal"] {
 }
 
 .navbar-light .navbar-brand {
-  color: #32325d;
+  color: #4d1979;
 }
 
 .navbar-nav .nav-item .media:not(:last-child) {

@@ -59,14 +59,22 @@ Bootstrap(app)
 class WODWeightForm(FlaskForm):
     one_rm = IntegerField("What is your 1RM?")
     wod_reps = IntegerField("How many reps is your workout?")
-    submit = SubmitField("WOD Brain")
+    submit = SubmitField("Calculate")
 #
 # class AddMovieForm(FlaskForm):
 #     title = StringField("Movie Title", validators=[DataRequired()])
 #     submit = SubmitField("Add Movie")
 
-@app.route("/", methods=["GET","POST"])
+@app.route("/")
 def home():
+    return render_template("index.html")
+
+@app.route("/templates")
+def templates():
+    return render_template("template_html_sheet.html")
+
+@app.route("/wodweight", methods=["GET","POST"])
+def wodweight():
     wodform = WODWeightForm()
     if wodform.validate_on_submit():
         one_rm = wodform.one_rm.data
@@ -77,8 +85,9 @@ def home():
         wod_weight = one_rm * rep_reduction_factor
         lift = int(wod_weight - wod_weight % 5)
         liftstring = f"For a 1RM of {one_rm}#, the recommended weight is no more than {lift}# for {wod_reps} reps."
-        return render_template("wodweight.html", liftstring=liftstring)
-    return render_template("index.html", form=wodform)
+        print(liftstring)
+        return render_template("wodweight.html", liftstring=liftstring, form=wodform)
+    return render_template("wodweight.html", form=wodform, lifstring="")
 
 
 
