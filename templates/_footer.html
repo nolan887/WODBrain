@@ -1,4 +1,7 @@
-  <!--   Core JS Files   -->
+  <div class="text-center text-secondary pt-0" style="height: 90px">
+    © Cloudbreak 2021
+  </div>
+<!--   Core JS Files   -->
   <script src="./static/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="./static/js/core/popper.min.js" type="text/javascript"></script>
   <script src="./static/js/core/bootstrap.min.js" type="text/javascript"></script>
@@ -21,6 +24,11 @@
       }
     }
   </script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          document.location.hash = '#{{ scrollToAnchor }}';
+      });
+  </script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
     window.TrackJS &&
@@ -29,6 +37,11 @@
         application: "argon-design-system-pro"
       });
   </script>
+  <script>
+    $(document).ready(function(){
+        $("#modal-wodcalc").modal('show');
+    });
+</script>
 </body>
 
 </html>

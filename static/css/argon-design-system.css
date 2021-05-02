@@ -192,7 +192,7 @@ a {
 }
 
 a:hover {
-  color: #233dd2;
+  color: #a68cbc;
   text-decoration: none;
 }
 
@@ -233,6 +233,7 @@ img {
   vertical-align: middle;
   border-style: none;
 }
+
 
 svg {
   overflow: hidden;
@@ -7458,7 +7459,7 @@ button.bg-darker:focus {
 }
 
 .border-top {
-  border-top: 0.0625rem solid #e9ecef !important;
+  border-top: 0.0625rem solid #a3a9ac !important;
 }
 
 .border-right {

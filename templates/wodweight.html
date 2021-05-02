@@ -4,8 +4,8 @@
     <div class="section section-components  pb-10 bg-primary" style="color: #f4f5f7;">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-12" id="results">
-            <h2 style="color: #f4f5f7;">WOD Weight</h2>
+          <div class="col-lg-12">
+            <h2 style="color: #f4f5f7;"><img src="./static/img/logo_white.png" style="height: 100px;" class="img-fluid">WOD Weight</h2>
             <div class="col-sm">
               <p>Use the fields below to input your known one rep max (1RM) and the amount of repetitions you are targeting for your workout.</p>
             </div>
@@ -15,23 +15,57 @@
       {% include "_greyskew.html" %}
     </div>
     <div class="section section-components pb-100 bg-secondary">
-      <div class="container">
+        <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-12" id="calc">
             <h2>WOD Weight</h2>
             <div class="col-sm">
-              <p class="text-primary">Use the fields below to input your known one rep max (1RM) and the amount of repetitions you are targeting for your workout. </p>
                   {{ wtf.quick_form(form, novalidate=True) }}
             </div>
           </div>
         </div>
       </div>
-<!--      TODO 1: MAKE THIS A PURPLE BACKGROUND SECTION ALL H1-->
-<!--      TODO 2: MAKE A JAVASCRIPT POPUP WITH THE LIFTSTRING-->
+<!--WEIGHT RECOMMENDATION: ONLY SHOWS IF FORM WAS USED-->
     {% if lifstring != "" %}
       {% include "_purpleskew.html" %}
     </div>
-      {{ liftstring }}
+    <div class="section section-components pb-100 bg-primary" style="color: #f4f5f7;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12" id="results">
+            <h2 style="color: #f4f5f7;">Weight Recommendation</h2>
+            <div class="col-sm">
+                <p></p>
+                <p>{{ liftstring }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--MODAL POPUP-->
+        <div class="row">
+          <div class="col-md-4">
+          <div class="modal fade" id="modal-wodcalc" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title" id="modal-title-default">Weight Recommendation: {{ lift }}#</h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>{{liftstring}}</p>
+                  <p>If doing more than one round at {{rep}} reps for a Metcon, consider going a bit lighter!</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
     {% endif %}
     </div>
 

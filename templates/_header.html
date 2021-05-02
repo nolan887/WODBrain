@@ -33,25 +33,34 @@ Coded by www.creative-tim.com
   <link href="./static/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="./static/css/argon-design-system.css" rel="stylesheet" />
+
 </head>
 
-<body class="index-page">
+<body class={{page_class}}>
   <!-- Navbar -->
   <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg bg-warning navbar-light fixed-bottom shadow py-2">
-    <a class="navbar-brand" href="#">WODBrain</a>
+    <a class="navbar-brand" href="/">WODBrain</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fas fa-calculator"></i> WOD Weight</a>
+          <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/wodweight"><i class="fas fa-calculator"></i> WOD Weight</a>
+        </li>
+        <!--
         <li class="nav-item">
           <a class="nav-link" href="#"><i class="fas fa-book"></i> Log Lift</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#"><i class="far fa-id-card"></i> Lifter Profile</a>
+        </li>
+        -->
+        <li class="nav-item">
+          <a class="nav-link" href="/info"><i class="fas fa-info"></i> Info</a>
         </li>
       </ul>
     </div>

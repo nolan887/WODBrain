@@ -67,11 +67,11 @@ class WODWeightForm(FlaskForm):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", page_class="index-page")
 
 @app.route("/templates")
 def templates():
-    return render_template("template_html_sheet.html")
+    return render_template("template_html_sheet.html", page_class="index-page")
 
 @app.route("/wodweight", methods=["GET","POST"])
 def wodweight():
@@ -86,10 +86,13 @@ def wodweight():
         lift = int(wod_weight - wod_weight % 5)
         liftstring = f"For a 1RM of {one_rm}#, the recommended weight is no more than {lift}# for {wod_reps} reps."
         print(liftstring)
-        return render_template("wodweight.html", liftstring=liftstring, form=wodform)
-    return render_template("wodweight.html", form=wodform, lifstring="")
+        # TODO: redirect to "#results" portion of the page
+        return render_template("wodweight.html", page_class="index-page", liftstring=liftstring, rep=wod_reps, lift=lift, form=wodform, scrollToAnchor="results")
+    return render_template("wodweight.html", page_class="index-page", form=wodform, lifstring="")
 
-
+@app.route("/info")
+def info():
+    return render_template("info.html", page_class="profile-page")
 
 if __name__ == '__main__':
     app.run(debug=True)
