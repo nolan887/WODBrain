@@ -69,6 +69,11 @@ class WODWeightForm(FlaskForm):
 def home():
     return render_template("index.html", page_class="index-page")
 
+@app.route("/phone")
+def phone():
+    return render_template("phoneapp.html", page_class="index-page")
+
+
 @app.route("/templates")
 def templates():
     return render_template("template_html_sheet.html", page_class="index-page")
