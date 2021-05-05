@@ -1,16 +1,17 @@
 {
   "short_name": "WODBrain",
   "name": "WODBrain, a cloudbreak app",
-  "description": "This app helps you shop your favorite brand.",
+  "description": "You're at the gym to work your muscles, not your brain. Let us handle the mental math!",
   "icons": [
     {
-      "src": "../img/wodbrain_logo_circ_black.png",
+      "src": "../img/wodbrain-apple-icon.png",
       "type": "image/png",
       "sizes": "192x192"
     }
   ],
-  "start_url": "/",
+  "start_url": "/wodbrain",
   "background_color": "#4d1979",
   "theme_color": "#4d1979",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait"
 }
