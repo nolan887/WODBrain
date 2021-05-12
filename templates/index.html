@@ -1,81 +1,92 @@
 {% include "_header.html" %}
 
-  <div class="wrapper">
-<!--    Start of "Hero" Section-->
+<div class="wrapper">
+    <!--    Start of "Hero" Section-->
     <div class="section section-hero section-shaped">
-<!--      White Bubbles-->
-      <div class="shape shape-style-1 shape-primary">
-        <span class="span-150"></span>
-        <span class="span-50"></span>
-        <span class="span-50"></span>
-        <span class="span-75"></span>
-        <span class="span-100"></span>
-        <span class="span-75"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-      </div>
-<!--      End Bubbles-->
-      <div class="page-header">
-        <div class="container shape-container d-flex align-items-center py-md">
-          <div class="col px-0">
-            <div class="row align-items-center justify-content-center">
-              <div class="col-lg-6 text-center">
-                <img src="./static/img/wodbrain_logo_rect_white.png" style="height: 75px;" class="img-fluid"><span class="lead text-white" style="font-size: 2rem; vertical-align: middle;">WODBrain</span>
-                <p class="lead text-white">You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
-                <div class="btn-wrapper mt-5">
-                  <a href="./wodweight" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
-                    <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
-                    <span class="btn-inner--text">WOD Weight</span>
-                  </a>
-                  <!--
+        <!--      White Bubbles-->
+        <div class="shape shape-style-1 shape-primary">
+            <span class="span-150"></span>
+            <span class="span-50"></span>
+            <span class="span-50"></span>
+            <span class="span-75"></span>
+            <span class="span-100"></span>
+            <span class="span-75"></span>
+            <span class="span-50"></span>
+            <span class="span-100"></span>
+            <span class="span-50"></span>
+            <span class="span-100"></span>
+        </div>
+        <!--      End Bubbles-->
+        <div class="page-header">
+            <div class="container shape-container d-flex align-items-center py-md">
+                <div class="col px-0">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-6 text-center">
+                            <img src="./static/img/wodbrain_logo_circ_white.png" style="height: 75px;" class="img-fluid"><span class="lead text-white" style="font-size: 2rem; vertical-align: middle;"> &nbsp;WODBrain</span>
+                            <p class="lead text-white">You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
+                            <div class="btn-wrapper mt-5">
+                                <a href="./wodweight" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
+                                    <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
+                                    <span class="btn-inner--text">WOD Weight</span>
+                                </a>
+                                <!--
                   TODO: Make this button active once the lifter log is fully developed
                   <a href="#" class="btn btn-lg btn-github btn-icon mb-3 mb-sm-0" target="_blank">
                     <span class="btn-inner--icon"><i class="fas fa-book"></i></span>
                     <span class="btn-inner--text">Lifter Log</span>
                   </a>
                   -->
+                            </div>
+                            <div class="mt-5">
+                                <small class="font-weight-bold mb-0 mr-2 text-white">created by: Charlie Nolan at <a href="/info">Cloudbreak</a></small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-5">
-                  <small class="font-weight-bold mb-0 mr-2 text-white">created by: Charlie Nolan at <a href="/info">Cloudbreak</a></small>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-      {% include "_greyskew.html" %}
+        {% include "_greyskew.html" %}
     </div>
-<!--    End of "Hero" Section-->
+    <!--    End of "Hero" Section-->
 
-<!--    Section with Grey Background and Purple Text-->
+    <!--    Section with Grey Background and Purple Text-->
     <div class="section section-components bg-secondary">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-12" id="WODWeight">
-            <h2>WOD Weight</h2>
-            <div class="col-sm">
-              <p>Sick and tired of guessing at a WOD weight between scaled and Rx? Trying to get stronger but you don’t know how much is too much? WODBrain is the tool you’ve never know you always wanted!</p>
-              <p>The gym whiteboard and your personal notes app show one thing, your one rep max (1RM) so you can show yourself how jacked you’ve become.</p>
-              <p>Using this number and the target number of unbroken repetitions for your WOD, WODBrain will dial in exactly what weight you can handle.Our recommendation engine will give you the maximum weight recommended for your rep scheme.</p>
-              <h3>Example</h3>
-              <p>The WOD is Diane: 21-15-9 Deadlift (225/155) + Handstand Push-Ups, but your 1RM deadlift is only 200#. OH NO!</p>
-              <p>From here let’s devise a strategy to break 3 times max for each round. This means the maximum broken reps you are doing for this WOD is 7. Using 250# and 7 reps, WODBrain will calculate that you to should go no heavier than 165# for 7 unbroken reps.</p>
-              <p>What are you waiting for? Let's get started!</p>
-              <a href="/wodweight">
-                <button type="button" class="btn btn-default">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12" id="WODWeight">
+                    <h2>WOD Weight</h2>
+                    <div class="col-sm">
+                        <p>Sick and tired of guessing at a WOD weight between scaled and Rx? Trying to get stronger but you don’t know how much is too much? WODBrain is the tool you’ve never know you always wanted!</p>
+                        <p>The gym whiteboard and your personal notes app show one thing, your one rep max (1RM) so you can show yourself how jacked you’ve become.</p>
+                        <p>Using this number and the target number of unbroken repetitions for your WOD, WODBrain will dial in exactly what weight you can handle.Our recommendation engine will give you the maximum weight recommended for your rep scheme.</p>
+                        <h3>Example</h3>
+                        <p>The WOD is Diane: 21-15-9 Deadlift (225/155) + Handstand Push-Ups, but your 1RM deadlift is only 200#. OH NO!</p>
+                        <p>From here let’s devise a strategy to break 3 times max for each round. This means the maximum broken reps you are doing for this WOD is 7. Using 250# and 7 reps, WODBrain will calculate that you to should go no heavier than 165#
+                            for 7 unbroken reps.</p>
+                        <p>What are you waiting for? Let's get started!</p>
+                        <a href="/wodweight">
+                            <button type="button" class="btn btn-default">
                   <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
                       <span class="btn-inner--text">WOD Weight</span>
                 </button>
-              </a>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-<!--      {% include "_purpleskew.html" %}
-      TODO: Add section with purple background and light text explaining the logging lifts-->
+        {% include "_purpleskew.html" %}
+        <!-- TODO: Add section with purple background and light text explaining the logging lifts -->
     </div>
-  </div>
+    <div class="section section-components pb-4 bg-primary text-secondary">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <h2 class="text-secondary">Change Log</h2>
+                    <h6 class="text-secondary">ver 1.0 (2021-May-03)</h6>
+                    <p>Initial release. <a class="text-secondary" href="/wodweight">WOD Weight</a> functionality added.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-{% include "_footer.html" %}
+    {% include "_footer.html" %}
