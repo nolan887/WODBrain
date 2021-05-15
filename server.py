@@ -6,6 +6,8 @@ from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 import requests
 
+app = Flask(__name__)
+
 rep_reduction = {
     1: 1.00,
     2: 0.97,
@@ -39,7 +41,7 @@ rep_reduction = {
     30: 0.50
 }
 
-app = Flask(__name__)
+
 app.config['SECRET_KEY'] = 'supersecretkey'
 Bootstrap(app)
 
