@@ -93,7 +93,7 @@ body {
     line-height: 1.5;
     color: #4d1979;
     text-align: left;
-    background-color: #4d1979;
+    background-color: #a3a9ac;
 }
 
 [tabindex="-1"]:focus {
@@ -4594,12 +4594,11 @@ input[type="button"].btn-block {
 }
 
 .navbar {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: env(safe-area-inset-top, 1rem) env(safe-area-inset-right, 1rem) env(safe-area-inset-bottom, 1rem) env(safe-area-inset-left, 1rem) !important;
     padding: 1rem 1rem;
 }
 
