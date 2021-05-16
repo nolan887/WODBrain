@@ -6,9 +6,13 @@
         "src": "../img/wodbrain-apple-icon.png",
         "type": "image/png",
         "sizes": "192x192"
+    }, {
+        "src": "//img/wodbrain512.png",
+        "type": "image/png",
+        "sizes": "512x512"
     }],
     "start_url": "https://wodbrain.cloudbrk.io/wodweight",
-    "background_color": "#4d1979",
+    "background_color": "#000",
     "theme_color": "#4d1979",
     "display": "standalone",
     "orientation": "portrait"
