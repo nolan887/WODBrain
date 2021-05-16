@@ -1,17 +1,15 @@
 {
-  "short_name": "WODBrain",
-  "name": "WODBrain, a cloudbreak app",
-  "description": "You're at the gym to work your muscles, not your brain. Let us handle the mental math!",
-  "icons": [
-    {
-      "src": "../img/wodbrain-apple-icon.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    }
-  ],
-  "start_url": "/wodbrain",
-  "background_color": "#4d1979",
-  "theme_color": "#4d1979",
-  "display": "standalone",
-  "orientation": "portrait"
+    "short_name": "WODBrain",
+    "name": "WODBrain, a cloudbreak app",
+    "description": "You're at the gym to work your muscles, not your brain. Let us handle the mental math!",
+    "icons": [{
+        "src": "../img/wodbrain-apple-icon.png",
+        "type": "image/png",
+        "sizes": "192x192"
+    }],
+    "start_url": "https://wodbrain.cloudbrk.io/wodweight",
+    "background_color": "#4d1979",
+    "theme_color": "#4d1979",
+    "display": "standalone",
+    "orientation": "portrait"
 }
