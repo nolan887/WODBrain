@@ -57,15 +57,15 @@ Bootstrap(app)
 #     id = db.Column(db.Integer, primary_key=True)
 # db.create_all()
 
-# # WTForm
 class WODWeightForm(FlaskForm):
     one_rm = IntegerField("What is your 1RM?")
     wod_reps = IntegerField("How many reps is your workout?")
-    submit = SubmitField("Calculate")
-#
-# class AddMovieForm(FlaskForm):
-#     title = StringField("Movie Title", validators=[DataRequired()])
-#     submit = SubmitField("Add Movie")
+    submit = SubmitField("Calculate WODWeight")
+
+class oneRMEForm(FlaskForm):
+    multirepload = IntegerField("How much weight did you lift?")
+    multirep = IntegerField("How many unbroken reps?")
+    submit = SubmitField("Calculate 1RME")
 
 @app.route("/")
 def home():
@@ -92,10 +92,23 @@ def wodweight():
         wod_weight = one_rm * rep_reduction_factor
         lift = int(wod_weight - wod_weight % 5)
         liftstring = f"For a 1RM of {one_rm}#, the recommended weight is no more than {lift}# for {wod_reps} reps."
-        print(liftstring)
-        # TODO: redirect to "#results" portion of the page
         return render_template("wodweight.html", page_class="index-page", liftstring=liftstring, rep=wod_reps, lift=lift, form=wodform, scrollToAnchor="results")
     return render_template("wodweight.html", page_class="index-page", form=wodform, lifstring="")
+
+@app.route("/onerme", methods=["GET","POST"])
+def onerme():
+    one_rme_form = oneRMEForm()
+    if one_rme_form.validate_on_submit():
+        rep_lifted = one_rme_form.multirep.data
+        weight_lifted = one_rme_form.multirepload.data
+        if rep_lifted > 30:
+            rep_lifted = 30
+        rep_factor = rep_reduction[rep_lifted]
+        pure_onerme = weight_lifted / rep_factor
+        onerme = int(pure_onerme - pure_onerme % 5)
+        onermestring = f"Lifting {weight_lifted}# for {rep_lifted} repetitions is equivalent to a one rep lift of {onerme}#."
+        return render_template("1rme.html", page_class="index-page", onermestring=onermestring, onerme=onerme, form=one_rme_form, scrollToAnchor="results")
+    return render_template("1rme.html", page_class="index-page", form=one_rme_form, onermestring="")
 
 @app.route("/info")
 def info():

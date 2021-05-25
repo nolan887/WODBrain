@@ -29,13 +29,10 @@
                                     <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
                                     <span class="btn-inner--text">WOD Weight</span>
                                 </a>
-                                <!--
-                  TODO: Make this button active once the lifter log is fully developed
-                  <a href="#" class="btn btn-lg btn-github btn-icon mb-3 mb-sm-0" target="_blank">
-                    <span class="btn-inner--icon"><i class="fas fa-book"></i></span>
-                    <span class="btn-inner--text">Lifter Log</span>
-                  </a>
-                  -->
+                                <a href="./onerme" class="btn btn-lg btn-dark btn-icon mb-3 mb-sm-0">
+                                    <span class="btn-inner--icon"><i class="fas fa-crown"></i></span>
+                                    <span class="btn-inner--text">1RM Equivalent</span>
+                                </a>
                             </div>
                             <div class="mt-5">
                                 <small class="font-weight-bold mb-0 mr-2 text-white">created by: Charlie Nolan at <a href="https://www.cloudbrk.io">Cloudbreak</a></small>
@@ -66,29 +63,61 @@
                         <p>What are you waiting for? Let's get started!</p>
                         <a href="/wodweight">
                             <button type="button" class="btn btn-default">
-                  <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
-                      <span class="btn-inner--text">WOD Weight</span>
-                </button>
+                                <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
+                                <span class="btn-inner--text">WOD Weight</span>
+                            </button>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
         {% include "_purpleskew.html" %}
-        <!-- TODO: Add section with purple background and light text explaining the logging lifts -->
     </div>
-    <div class="section section-components pb-4 bg-primary text-secondary">
+    <div class="section section-components bg-primary text-secondary section-shaped">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12" id="1RME">
+                    <h2 class="text-secondary">1RM Equivalent</h2>
+                    <div class="col-sm">
+                        <p>Unfortunately, not every day at the gym is build to a heavy single. Depending on your programming, there can be periodic strength sessions sprinkled in, but without checking your 1RM against itself it can be hard to determine just
+                            how much stronger you are getting.</p>
+                        <p>Enter 1RME! Regardless of the reps and load, this calculator will convert what you've lifted to the equivalent one rep maximum. Instead of scratching your head thinking "close enough" you can now compare apples to apples using
+                            1RME.
+                        </p>
+                        <h3 class="text-secondary">Example</h3>
+                        <p>It's been months since you've maxed out your front squat during a pure strength session. This WOD you've got a shorter metcon for your Part B and Part A is building 5x5 front squat to get your form dialed in and get the blood pumping
+                            a bit before the Metcon.</p>
+                        <p>Your last set of five was feeling pretty good and ended at 210#, you keep the part about thinking you were going to be stuck in the hole forever to yourself as you fist bump your classmates. Your established 1RM is 220#, so it
+                            seems like you were pretty close. </p>
+                        <p>Using the 1RME calculator, you'll be very pumped when you see that the equivalent 1RM for 5 reps at 210# is actually 235#! Congrats on the new PR!</p>
+                        <p>What are you waiting for? Let's get started!</p>
+                        <a href="/onerme">
+                            <button type="button" class="btn btn-white text-primary">
+                                <span class="btn-inner--icon"><i class="fas fa-crown"></i></span>
+                                <span class="btn-inner--text">1RM Equivalent</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% include "_greyskew.html" %}
+        </div>
+    </div>
+    <div class="section section-components pb-4 bg-secondary">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
-                    <h2 class="text-secondary">Change Log</h2>
-                    <h6 class="text-secondary">ver 1.0 (2021-May-03)</h6>
-                    <p>Initial release. <a class="text-secondary" href="/wodweight">WOD Weight</a> functionality added.</p>
-                    <h6 class="text-secondary">ver 1.1 (2021-May-14)</h6>
+                    <h2>Change Log</h2>
+                    <h6>ver 1.0 (2021-May-03)</h6>
+                    <p>Initial release. <a href="/wodweight">WOD Weight</a> functionality added.</p>
+                    <h6>ver 1.1 (2021-May-14)</h6>
                     <p>Relocated app to self-hosted server.</p>
+                    <h6>ver 2.0 (2021-May 25)</h6>
+                    <p>Feature release. <a href="/onerme">1RME</a> functionality added.</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    {% include "_footer.html" %}
+{% include "_footer.html" %}

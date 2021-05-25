@@ -16,9 +16,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
-                <h2 style="color: #f4f5f7;"><img src="./static/img/wodbrain_logo_circ_white.png" style="height: 75px;" class="img-fluid"> &nbsp;WODBrain: WODWeight</h2>
+                <h2 style="color: #f4f5f7;"><img src="./static/img/wodbrain_logo_circ_white.png" style="height: 75px;" class="img-fluid"> &nbsp;WODBrain: 1RME</h2>
                 <div class="col-sm pt-2">
-                    <p>Use the fields below to input your known one rep max (1RM) and the amount of repetitions you are targeting for your workout.</p>
+                    <p> Use the fields below to input your repetitions and weight lifted to calculate your one rep max equivalent.</p>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12" id="calc">
-                <h2>WOD Weight</h2>
+                <h2>1RM Equivalent </h2>
                 <div class="col-sm">
                     {{ wtf.quick_form(form, novalidate=True) }}
                 </div>
@@ -37,16 +37,16 @@
         </div>
     </div>
     <!--WEIGHT RECOMMENDATION: ONLY SHOWS IF FORM WAS USED-->
-    {% if lifstring != "" %} {% include "_purpleskew.html" %}
+    {% if onermestring != "" %} {% include "_purpleskew.html" %}
 </div>
 <div class="section section-components pb-100 bg-primary" style="color: #f4f5f7;">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12" id="results">
-                <h2 style="color: #f4f5f7;">Weight Recommendation: {{ lift }}#</h2>
+                <h2 style="color: #f4f5f7;">1RME: {{ onerme }}#</h2>
                 <div class="col-sm">
                     <p></p>
-                    <p>{{ liftstring }}</p>
+                    <p>{{ onermestring }}</p>
                 </div>
             </div>
         </div>
@@ -59,14 +59,13 @@
             <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-default">Weight Recommendation: {{ lift }}#</h6>
+                        <h6 class="modal-title" id="modal-title-default">1RME: {{ onerme }}#</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                     </div>
                     <div class="modal-body">
-                        <p>{{liftstring}}</p>
-                        <p>If doing more than one round at {{rep}} reps for a Metcon, consider going around 10 pounds lighter!</p>
+                        <p> {{ onermestring }}</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
