@@ -110,9 +110,9 @@ def onerme():
         return render_template("1rme.html", page_class="index-page", onermestring=onermestring, onerme=onerme, form=one_rme_form, scrollToAnchor="results")
     return render_template("1rme.html", page_class="index-page", form=one_rme_form, onermestring="")
 
-@app.route("/info")
-def info():
-    return render_template("info.html", page_class="profile-page")
+@app.route("/mobile")
+def mobile():
+    return render_template("mobile_splash.html", page_class="index-page")
 
 if __name__ == '__main__':
     app.run(debug=True)
