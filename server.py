@@ -3,44 +3,13 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
+from wtforms.fields.core import FloatField, RadioField, SelectField
 from wtforms.validators import DataRequired
 import requests
+from wtforms.widgets.core import Select
+from lift_tables import rep_reduction, age_reduction
 
 app = Flask(__name__)
-
-rep_reduction = {
-    1: 1.00,
-    2: 0.97,
-    3: 0.94,
-    4: 0.92,
-    5: 0.89,
-    6: 0.86,
-    7: 0.83,
-    8: 0.81,
-    9: 0.78,
-    10: 0.75,
-    11: 0.73,
-    12: 0.71,
-    13: 0.70,
-    14: 0.68,
-    15: 0.67,
-    16: 0.65,
-    17: 0.64,
-    18: 0.63,
-    19: 0.61,
-    20: 0.60,
-    21: 0.59,
-    22: 0.58,
-    23: 0.57,
-    24: 0.56,
-    25: 0.55,
-    26: 0.54,
-    27: 0.53,
-    28: 0.52,
-    29: 0.51,
-    30: 0.50
-}
-
 
 app.config['SECRET_KEY'] = 'supersecretkey'
 Bootstrap(app)
@@ -67,6 +36,14 @@ class oneRMEForm(FlaskForm):
     multirep = IntegerField("How many unbroken reps?")
     submit = SubmitField("Calculate 1RME")
 
+class TargetWeightForm(FlaskForm):
+    sex = RadioField(label="Gender",choices=[('m',"♂ Male"),('f',"♀ Female")],default='m')
+    age = IntegerField("Age (years)")
+    bw = IntegerField("Body Weight (lb)")
+    movement = SelectField("Barbell Movement",choices=[('s1','Select 1'),('s2','Select 2')])
+    submit = SubmitField("Calculate Targets")
+
+
 @app.route("/")
 def home():
     return render_template("index.html", page_class="index-page")
@@ -74,7 +51,6 @@ def home():
 @app.route("/phone")
 def phone():
     return render_template("phoneapp.html", page_class="index-page")
-
 
 @app.route("/templates")
 def templates():
@@ -109,6 +85,13 @@ def onerme():
         onermestring = f"Lifting {weight_lifted}# for {rep_lifted} repetitions is equivalent to a one rep lift of {onerme}#."
         return render_template("1rme.html", page_class="index-page", onermestring=onermestring, onerme=onerme, form=one_rme_form, scrollToAnchor="results")
     return render_template("1rme.html", page_class="index-page", form=one_rme_form, onermestring="")
+
+@app.route("/targets", methods=["GET","POST"])
+def targets():
+    form = TargetWeightForm()
+    if form.validate_on_submit():
+        print('form submitted')
+    return render_template("target_weight.html", page_class="index-page", form=form)
 
 @app.route("/mobile")
 def mobile():
