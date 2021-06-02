@@ -7,7 +7,7 @@ from wtforms.fields.core import FloatField, RadioField, SelectField
 from wtforms.validators import DataRequired
 import requests
 from wtforms.widgets.core import Select
-from lift_tables import rep_reduction, age_reduction
+from lift_tables import rep_reduction, age_reduction, backsquat, clean_and_jerk, bench_press, deadlift, front_squat, overhead_squat, power_clean, power_snatch, clean, snatch, strict_press, push_press, push_jerk, thruster
 
 app = Flask(__name__)
 
