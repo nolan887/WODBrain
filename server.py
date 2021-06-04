@@ -7,8 +7,7 @@ from wtforms.fields.core import FloatField, RadioField, SelectField
 from wtforms.validators import DataRequired
 import requests
 from wtforms.widgets.core import Select
-from lift_tables import rep_reduction, age_reduction, backsquat, clean_and_jerk, bench_press, deadlift, front_squat, overhead_squat, power_clean, power_snatch, clean, snatch, strict_press, push_press, push_jerk, thruster
-
+from lift_tables import rep_reduction, age_reduction, lift_tgt_dict
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'supersecretkey'
@@ -39,8 +38,26 @@ class oneRMEForm(FlaskForm):
 class TargetWeightForm(FlaskForm):
     sex = RadioField(label="Gender",choices=[('m',"♂ Male"),('f',"♀ Female")],default='m')
     age = IntegerField("Age (years)")
-    bw = IntegerField("Body Weight (lb)")
-    movement = SelectField("Barbell Movement",choices=[('s1','Select 1'),('s2','Select 2')])
+    bw = FloatField("Body Weight (lb)")
+    movement = SelectField(
+        "Barbell Movement",
+        choices=[
+            ('front_squat','Front Squat'),
+            ('backsquat','Back Squat'),
+            ('overhead_squat','Overhead Squat'),
+            ('clean','Clean (Squat Clean)'),
+            ('power_clean','Power Clean'),
+            ('clean_and_jerk','Clean & Jerk'),
+            ('deadlift','Deadlift'),
+            ('snatch','Snatch (Squat Snatch)'),
+            ('power_snatch','Power Snatch'),
+            ('strict_press','Strict Press'),
+            ('push_press','Push Press'),
+            ('push_jerk','Jerk Press'),
+            ('thruster','Thruster'),
+            ('bench_press','Bench Press'),
+            ]
+    )
     submit = SubmitField("Calculate Targets")
 
 
@@ -90,7 +107,41 @@ def onerme():
 def targets():
     form = TargetWeightForm()
     if form.validate_on_submit():
-        print('form submitted')
+        # Store form data as variables
+        tw_sex = form.sex.data
+        tw_age = form.age.data
+        tw_bodywt = form.bw.data
+        tw_mvmt = form.movement.data
+        # Move age to within acceptable bounds
+        if tw_age < 14:
+            tw_age = 14
+        elif tw_age > 89:
+            tw_age = 89
+        # Calculate factor for age reduction
+        age_reducer = age_reduction[tw_age]
+        # Round body weight to the nearest 10 lb increment
+        bwt = int(tw_bodywt - tw_bodywt % 10)
+        # Move weight to within acceptable bounds
+        if bwt < 90 and tw_sex == 'f':
+            bwt = 90
+        elif bwt < 110:
+            bwt = 110
+        elif bwt > 260 and tw_sex == 'f':
+            bwt = 260
+        elif bwt > 310:
+            bwt = 310
+        result = lift_tgt_dict[tw_mvmt][tw_sex][bwt]
+        tgt1 = result[0] * age_reducer * bwt
+        tgt2 = result[1] * age_reducer * bwt
+        tgt3 = result[2] * age_reducer * bwt
+        tgt4 = result[3] * age_reducer * bwt
+        tgt5 = result[4] * age_reducer * bwt
+        tgt1 = int(tgt1 - tgt1 % 5)
+        tgt2 = int(tgt2 - tgt2 % 5)
+        tgt3 = int(tgt3 - tgt3 % 5)
+        tgt4 = int(tgt4 - tgt4 % 5)
+        tgt5 = int(tgt5 - tgt5 % 5)
+        return render_template("target_weight.html", page_class="index-page", form=form, tgt1=tgt1, tgt2=tgt2, tgt3=tgt3, tgt4=tgt4, tgt5=tgt5)
     return render_template("target_weight.html", page_class="index-page", form=form)
 
 @app.route("/mobile")
