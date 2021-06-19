@@ -3,11 +3,11 @@
     "name": "WODBrain, a cloudbreak app",
     "description": "You're at the gym to work your muscles, not your brain. Let us handle the mental math!",
     "icons": [{
-        "src": "../img/wodbrain-apple-icon.png",
+        "src": "https://www.wodbrain.app/img/wodbrain-apple-icon.png",
         "type": "image/png",
         "sizes": "192x192"
     }, {
-        "src": "//img/wodbrain512.png",
+        "src": "https://www.wodbrain.app/img/wodbrain512.png",
         "type": "image/png",
         "sizes": "512x512"
     }],
