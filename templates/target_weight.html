@@ -29,13 +29,172 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12" id="levels">
-                <h2>Target Weight </h2>
+                <h2>Target 1RM Weight </h2>
                 <div class="col-sm-6">
                     {{ wtf.quick_form(form, novalidate=True) }}
                 </div>
             </div>
         </div>
     </div>
+    <!--WEIGHT RECOMMENDATION: ONLY SHOWS IF FORM WAS USED-->
+    {% if resultsmode != "" %} {% include "_purpleskew.html" %}
+</div>
+<div class="section section-components pb-100 bg-primary" style="color: #f4f5f7;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12" id="results">
+                <h2 style="color: #f4f5f7;">Target 1RM Weight</h2>
+                <div class="col-sm">
+                    <table>
+                        <tr>
+                            <td>
+                                Level I
+                            </td>
+                            <td>
+                                {{ tgt1 }}#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Level II
+                            </td>
+                            <td>
+                                {{ tgt2 }}#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Level III
+                            </td>
+                            <td>
+                                {{ tgt3 }}#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Level IV
+                            </td>
+                            <td>
+                                {{ tgt4 }}#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Level V
+                            </td>
+                            <td>
+                                {{ tgt5 }}#
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align: center;">
+                                <span class="btn btn-white btn-icon mb-3 mb-sm-0" data-toggle="modal" data-target="#modal-level-dfn">
+                                    <span class="btn-inner--text">Define Levels</span>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL POPUP-->
+<div class="row">
+    <div class="col-md-4">
+        <div class="modal fade" id="modal-wodcalc" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modal-title-default">Target 1RM Weights</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <td>
+                                    Level I:
+                                </td>
+                                <td>
+                                    {{ tgt1 }}#
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Level II:
+                                </td>
+                                <td>
+                                    {{ tgt2 }}#
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Level III:
+                                </td>
+                                <td>
+                                    {{ tgt3 }}#
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Level IV:
+                                </td>
+                                <td>
+                                    {{ tgt4 }}#
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Level V:
+                                </td>
+                                <td>
+                                    {{ tgt5 }}#
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="modal fade" id="modal-level-dfn" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modal-title-default">Target 1RM Weights</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><span style="font-weight: bold;">Level I:</span> Stronger than 5% of lifters. A beginner lifter can perform the movement correctly and has practiced it for at least a month.</p>
+                        <p><span style="font-weight: bold;">Level II:</span> Stronger than 20% of lifters. A novice lifter has trained regularly in the technique for at least six months.</p>
+                        <p><span style="font-weight: bold;">Level III:</span> Stronger than 50% of lifters. An intermediate lifter has trained regularly in the technique for at least two years.</p>
+                        <p><span style="font-weight: bold;">Level IV:</span> Stronger than 80% of lifters. An advanced lifter has progressed for over five years.</p>
+                        <p><span style="font-weight: bold;">Level V:</span> Stronger than 95% of lifters. An elite lifter has dedicated over five years to become competitive at strength sports.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 </div>
 
-<!-- NEED TO ADD CODE TO RECIEVE AND PROCESS THE TARGET WEIGHTS PASSED IN AND MODAL POPUP -->
+
+
+
+
+{% include "_footer.html" %}

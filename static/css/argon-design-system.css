@@ -246,6 +246,18 @@ table {
     border-collapse: collapse;
 }
 
+th {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    text-align: center;
+}
+
+td {
+    border: 1px solid #f4f5f7;
+    padding: 0.5rem;
+    text-align: center;
+}
+
 caption {
     padding-top: 1rem;
     padding-bottom: 1rem;

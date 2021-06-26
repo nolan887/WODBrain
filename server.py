@@ -142,8 +142,8 @@ def targets():
         tgt3 = int(tgt3 - tgt3 % 5)
         tgt4 = int(tgt4 - tgt4 % 5)
         tgt5 = int(tgt5 - tgt5 % 5)
-        return render_template("target_weight.html", page_class="index-page", form=form, tgt1=tgt1, tgt2=tgt2, tgt3=tgt3, tgt4=tgt4, tgt5=tgt5)
-    return render_template("target_weight.html", page_class="index-page", form=form)
+        return render_template("target_weight.html", page_class="index-page", form=form, tgt1=tgt1, tgt2=tgt2, tgt3=tgt3, tgt4=tgt4, tgt5=tgt5, resultsmode="true", scrollToAnchor="results")
+    return render_template("target_weight.html", page_class="index-page", form=form, resultsmode="")
 
 @app.route("/mobile")
 def mobile():
