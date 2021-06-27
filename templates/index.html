@@ -24,16 +24,24 @@
                         <div class="col-lg-6 text-center">
                             <img src="./static/img/wodbrain_logo_circ_white.png" style="height: 75px;" class="img-fluid"><span class="lead text-white" style="font-size: 2rem; vertical-align: middle;"> &nbsp;WODBrain</span>
                             <p class="lead text-white">You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
-                            <div class="btn-wrapper mt-5">
+                            <p>
                                 <a href="./wodweight" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
                                     <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
                                     <span class="btn-inner--text">WOD Weight</span>
                                 </a>
+                            </p>
+                            <p>
                                 <a href="./onerme" class="btn btn-lg btn-dark btn-icon mb-3 mb-sm-0">
                                     <span class="btn-inner--icon"><i class="fas fa-crown"></i></span>
                                     <span class="btn-inner--text">1RM Equivalent</span>
                                 </a>
-                            </div>
+                            </p>
+                            <p>
+                                <a href="./targets" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
+                                    <span class="btn-inner--icon"><i class="fas fa-bullseye"></i></span>
+                                    <span class="btn-inner--text">Weight Target</span>
+                                </a>
+                            </p>
                             <div class="mt-5">
                                 <small class="font-weight-bold mb-0 mr-2 text-white">created by: Charlie Nolan at <a href="https://www.cloudbrk.io">Cloudbreak</a></small>
                             </div>
@@ -73,7 +81,7 @@
         </div>
         {% include "_purpleskew.html" %}
     </div>
-    <div class="section section-components bg-primary text-secondary section-shaped">
+    <div class="section section-components bg-primary text-secondary ">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12" id="1RME">
@@ -103,18 +111,40 @@
             {% include "_greyskew.html" %}
         </div>
     </div>
-    <div class="section section-components pb-4 bg-secondary">
+    <div class="section section-components bg-secondary">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12" id="WODWeight">
+                    <h2>Target Weight</h2>
+                    <div class="col-sm">
+                        <p> words words words</p>
+                        <h3>Example</h3>
+                        <p> probably don't need an example?</p>
+                        <p>What are you waiting for? Let's get started!</p>
+                        <a href="/targets">
+                            <button type="button" class="btn btn-default">
+                                <span class="btn-inner--icon"><i class="fas fa-bullseye"></i></span>
+                                <span class="btn-inner--text">Target Weight</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include "_purpleskew.html" %}
+    </div>
+    <div class="section section-components pb-4 bg-primary text-secondary">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
-                    <h2>Change Log</h2>
-                    <h6>ver 1.0 (2021-May-03)</h6>
-                    <p>Initial release. <a href="/wodweight">WOD Weight</a> functionality added.</p>
-                    <h6>ver 1.1 (2021-May-14)</h6>
+                    <h2 class="text-secondary">Change Log</h2>
+                    <h6 class="text-secondary">ver 1.0 (2021-May-03)</h6>
+                    <p>Initial release. <a class="text-secondary" href="/wodweight">WOD Weight</a> functionality added.</p>
+                    <h6 class="text-secondary">ver 1.1 (2021-May-14)</h6>
                     <p>Relocated app to self-hosted server.</p>
-                    <h6>ver 2.0 (2021-May-25)</h6>
-                    <p>Feature release. <a href="/onerme">1RME</a> functionality added.</p>
-                    <h6>ver 2.1 (2021-May-27)</h6>
+                    <h6 class="text-secondary">ver 2.0 (2021-May-25)</h6>
+                    <p>Feature release. <a class="text-secondary" href="/onerme">1RME</a> functionality added.</p>
+                    <h6 class="text-secondary">ver 2.1 (2021-May-27)</h6>
                     <p>Added new home screen for mobile app use.</p>
                 </div>
             </div>
