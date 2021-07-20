@@ -66,6 +66,18 @@ Coded by www.creative-tim.com
                 <li class="nav-item">
                     <a class="nav-link" href="/targets"><i class="fas fa-bullseye"></i> Target Weight</a>
                 </li>
+                {% if not current_user.is_authenticated: %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login"><i class="fab fa-google"></i> Login</a>
+                </li>
+                {% else: %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/edit_profile"><i class="far fa-user-circle"></i> Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+                {% endif %}
                 <!--
         <li class="nav-item">
           <a class="nav-link" href="#"><i class="fas fa-book"></i> Log Lift</a>
