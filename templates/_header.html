@@ -71,21 +71,17 @@ Coded by www.creative-tim.com
                     <a class="nav-link" href="/login"><i class="fab fa-google"></i> Login</a>
                 </li>
                 {% else: %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/edit_profile"><i class="far fa-user-circle"></i> Edit Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-id-card"></i> Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"><i class="far fa-user"></i> Lifter Profile</a>
+                        <a class="dropdown-item" href="/edit_profile"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                        <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
                 </li>
                 {% endif %}
-                <!--
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fas fa-book"></i> Log Lift</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="far fa-user-circle"></i> Lifter Profile</a>
-        </li>
-        -->
                 <li class="nav-item">
                     <a class="nav-link" href="/phone"><i class="fab fa-app-store"></i> Save App</a>
                 </li>
