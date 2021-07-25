@@ -19237,14 +19237,14 @@ textarea[resize="horizontal"] {
 }
 
 .section-profile-cover {
-    height: 580px;
+    height: 200px;
     background-size: cover;
     background-position: center center;
 }
 
 @media (max-width: 991.98px) {
     .section-profile-cover {
-        height: 400px;
+        height: 25px;
     }
 }
 

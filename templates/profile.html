@@ -1,0 +1,85 @@
+{% include "_header.html" %} {% include "_analytics.html" %} {% import "bootstrap/wtf.html" as wtf %}
+
+<div class="section section-components section-shaped pb-10 " style="color: #f4f5f7;">
+    <div class="shape shape-style-1 shape-primary">
+        <span class="span-150"></span>
+        <span class="span-50"></span>
+        <span class="span-50"></span>
+        <span class="span-75"></span>
+        <span class="span-100"></span>
+        <span class="span-75"></span>
+        <span class="span-50"></span>
+        <span class="span-100"></span>
+        <span class="span-50"></span>
+        <span class="span-100"></span>
+    </div>
+    <div class="container" style="height: 110px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <h2 style="color: #f4f5f7;">Lifter Profile</h2>
+            </div>
+        </div>
+    </div>
+    {% include "_greyskew.html" %}
+</div>
+<div class="wrapper">
+    <section class="section-profile-cover bg-secondary"></section>
+    <section class="section bg-secondary">
+        <div class="container">
+            <div class="card card-profile shadow mt--300">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <a href="javascript:;">
+                                    <img src="../static/img/wodbrain-apple-icon.png" class="rounded-circle">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+                            <div class="card-profile-actions py-4 mt-lg-0">
+                                <a href="/edit_profile" class="btn btn-sm btn-outline-light mr-4">Edit Profile</a>
+                                <a href="/log-lift" class="btn btn-sm btn-outline-primary float-right">Log Lift</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 order-lg-1">
+                            <div class="card-profile-stats d-flex justify-content-center">
+                                <div>
+                                    <span class="heading">{{ current_user.age }}</span>
+                                    <span class="description">years</span>
+                                </div>
+                                <div>
+                                    <span class="heading">{{ current_user.sex }}</span>
+                                    <span class="description">sex</span>
+                                </div>
+                                <div>
+                                    <span class="heading">{{ current_user.bw }}</span>
+                                    <span class="description">lbs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3> {{ current_user.name }} </h3>
+                    </div>
+                    <div class="py-5 border-top text-center">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-9">
+                                <p>
+                                    This section needs to be filled in with the highest 1RME from the 3rd sql table
+                                </p>
+                                <p>
+                                    Maybe an href link for each lift name from the table above that brings up a modal with all lifts for current user of that movement?
+                                </p>
+                                <p>
+                                    <a href="/logout" class="btn btn-light mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include "_footer.html" %}

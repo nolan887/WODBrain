@@ -1,6 +1,5 @@
 from typing import AsyncGenerator
 from flask_wtf import FlaskForm
-# from flask_wtf.html5 import TelInput, DateInput
 from wtforms.widgets.html5 import TelInput, DateInput
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.fields.core import FloatField, RadioField, SelectField
@@ -42,7 +41,7 @@ class TargetWeightForm(FlaskForm):
             ('power_snatch','Power Snatch'),
             ('strict_press','Strict Press'),
             ('push_press','Push Press'),
-            ('push_jerk','Jerk Press'),
+            ('push_jerk','Push Jerk'),
             ('thruster','Thruster'),
             ('bench_press','Bench Press'),
             ]

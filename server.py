@@ -52,15 +52,19 @@ class User(db.Model, UserMixin):
     bw = db.Column(db.Float(6))
 
 # Create the Lift Catalog Table
+class MovementCatalog(db.Model):
+    __tablename__ = "move-cat"
+    id = db.Column(db.String(2), primary_key=True)
+    lift_table_name = db.Column(db.String(25))
+    move = db.Column(db.String(25))
 
 # Create the Lift data Tables
+
 
 # CREAT ALL TABLES IN DB
 db.create_all()
 
-
 # GOOGLE LOGIN HANDLING
-
 # Allows Google to pass info to local test environment
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
@@ -165,9 +169,13 @@ def edit_profile():
         db.session.commit()
         return redirect("/mobile")
 
-    return(render_template("editprofile.html", form=edit_form, name=edit_form.name.data, current_user=current_user))
+    return(render_template("editprofile.html", page_class="index-page", form=edit_form, name=edit_form.name.data, current_user=current_user))
 
-
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    if current_user.is_authenticated:
+        return(render_template("profile.html", page_class="profile-page", current_user=current_user))
+    return(redirect("/login"))
 
     
 # WODBRAIN ROUTING PAGES
@@ -211,7 +219,15 @@ def onerme():
 
 @app.route("/targets", methods=["GET","POST"])
 def targets():
-    form = TargetWeightForm()
+    if current_user.is_authenticated:
+        print("logged in")
+        form = TargetWeightForm(
+            sex = current_user.sex,
+            age = current_user.age,
+            bw = current_user.bw
+        )
+    else:
+        form = TargetWeightForm()
     if form.validate_on_submit():
         # Store form data as variables
         tw_sex = form.sex.data
@@ -247,14 +263,13 @@ def targets():
         tgt3 = int(tgt3 - tgt3 % 5)
         tgt4 = int(tgt4 - tgt4 % 5)
         tgt5 = int(tgt5 - tgt5 % 5)
-        return render_template("target_weight.html", page_class="index-page", form=form, tgt1=tgt1, tgt2=tgt2, tgt3=tgt3, tgt4=tgt4, tgt5=tgt5, resultsmode="true", scrollToAnchor="results", current_user=current_user)
+        move_descr = str(db.session.query(MovementCatalog.move).filter_by(lift_table_name=tw_mvmt).first()).strip(")(,'")
+        return render_template("target_weight.html", page_class="index-page", form=form, tgt1=tgt1, tgt2=tgt2, tgt3=tgt3, tgt4=tgt4, tgt5=tgt5, move=move_descr, resultsmode="true", scrollToAnchor="results", current_user=current_user)
     return render_template("target_weight.html", page_class="index-page", form=form, resultsmode="", current_user=current_user)
 
 @app.route("/mobile")
 def mobile():
     return render_template("mobile_splash.html", page_class="index-page", current_user=current_user)
-
-
 
 
 
