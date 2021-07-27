@@ -22728,5 +22728,13 @@ pre>code.highlight {
     bottom: 0;
 }
 
+.profile-table tr td {
+    border: 1px solid #4d1979;
+    min-width: 0;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
 
 /*# sourceMappingURL=kit-free.css.map */

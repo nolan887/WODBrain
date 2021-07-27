@@ -2,10 +2,13 @@
 import os
 import pathlib
 import requests
+import datetime
+from wtforms.fields.core import BooleanField
+
 
 # WODBRAIN IMPORTS
 from lift_tables import rep_reduction, age_reduction, lift_tgt_dict
-from forms import WODWeightForm, oneRMEForm, TargetWeightForm, LifterProfileForm
+from forms import WODWeightForm, oneRMEForm, TargetWeightForm, LifterProfileForm, LogLiftForm
 
 # FLASK IMPORTS
 from flask import Flask, request, session, abort, redirect, render_template
@@ -59,7 +62,16 @@ class MovementCatalog(db.Model):
     move = db.Column(db.String(25))
 
 # Create the Lift data Tables
-
+class LiftData(db.Model):
+    __tablename__ = "lift-log"
+    wodbrainlift = db.Column(db.Integer, primary_key=True)
+    userid = db.Column(db.String(2))
+    liftid = db.Column(db.String(2))
+    load = db.Column(db.Float(6))
+    reps = db.Column(db.Integer)
+    onerm = db.Column(db.Float(6))
+    actual_lift = db.Column(db.Boolean)
+    date = db.Column(db.Date)
 
 # CREAT ALL TABLES IN DB
 db.create_all()
@@ -85,6 +97,13 @@ def login_is_required(function):
             return function()
     return wrapper
 
+def one_rm_calc(rep, load):
+    if rep > 30:
+        rep = 30
+    rep_factor = rep_reduction[rep]
+    pure_onerme = load / rep_factor
+    one_rm_result = int(pure_onerme - pure_onerme % 5)
+    return one_rm_result
 
 # WODBRAIN LOGIN HANDLING
 @app.route("/login")
@@ -150,6 +169,9 @@ def logout():
     return redirect("/mobile")
 
 
+
+
+# WODBRAIN USER PROFILE
 @app.route("/edit_profile", methods=["GET","POST"])
 @login_is_required
 def edit_profile():
@@ -168,15 +190,49 @@ def edit_profile():
         current_user.bw = edit_form.bw.data
         db.session.commit()
         return redirect("/mobile")
-
     return(render_template("editprofile.html", page_class="index-page", form=edit_form, name=edit_form.name.data, current_user=current_user))
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if current_user.is_authenticated:
-        return(render_template("profile.html", page_class="profile-page", current_user=current_user))
+        liftnames = MovementCatalog.query.all()
+        liftdata = LiftData.query.filter_by()
+        return(render_template("profile.html", page_class="profile-page", current_user=current_user, liftcatalog=liftnames))
     return(redirect("/login"))
 
+
+
+# WODBRAIN LOG LIFT (USERS ONLY)
+@app.route("/loglift", methods=["GET","POST"])
+def loglift():
+    logform = LogLiftForm(
+        date = datetime.date.today()
+    )
+    if current_user.is_authenticated:
+        if logform.validate_on_submit():
+            onerme = one_rm_calc(
+                rep=logform.rep.data,
+                load=logform.load.data
+                )
+            if logform.rep.data == 1:
+                actual = True
+            else:
+                actual = False
+            new_lift = LiftData(
+                userid = current_user.id,
+                liftid = logform.movement.data,
+                load = logform.load.data,
+                reps = logform.rep.data,
+                onerm = onerme,
+                actual_lift = actual,
+                date = logform.date.data
+            )
+            db.session.add(new_lift)
+            db.session.commit()
+            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="yes"))
+        else:
+            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
+    return(redirect("/login"))
     
 # WODBRAIN ROUTING PAGES
 @app.route("/")
@@ -206,14 +262,10 @@ def wodweight():
 def onerme():
     one_rme_form = oneRMEForm()
     if one_rme_form.validate_on_submit():
-        rep_lifted = one_rme_form.multirep.data
-        weight_lifted = one_rme_form.multirepload.data
-        if rep_lifted > 30:
-            rep_lifted = 30
-        rep_factor = rep_reduction[rep_lifted]
-        pure_onerme = weight_lifted / rep_factor
-        onerme = int(pure_onerme - pure_onerme % 5)
-        onermestring = f"Lifting {weight_lifted}# for {rep_lifted} repetitions is equivalent to a one rep lift of {onerme}#."
+        rep=one_rme_form.multirep.data
+        load=one_rme_form.multirepload.data
+        onerme = one_rm_calc(rep=rep , load=load)
+        onermestring = f"Lifting {load}# for {rep} repetitions is equivalent to a one rep lift of {onerme}#."
         return render_template("1rme.html", page_class="index-page", onermestring=onermestring, onerme=onerme, form=one_rme_form, scrollToAnchor="results", current_user=current_user)
     return render_template("1rme.html", page_class="index-page", form=one_rme_form, onermestring="", current_user=current_user)
 
@@ -263,7 +315,7 @@ def targets():
         tgt3 = int(tgt3 - tgt3 % 5)
         tgt4 = int(tgt4 - tgt4 % 5)
         tgt5 = int(tgt5 - tgt5 % 5)
-        move_descr = str(db.session.query(MovementCatalog.move).filter_by(lift_table_name=tw_mvmt).first()).strip(")(,'")
+        move_descr = str(db.session.query(MovementCatalog.move).filter_by(id=tw_mvmt).first()).strip(")(,'")
         return render_template("target_weight.html", page_class="index-page", form=form, tgt1=tgt1, tgt2=tgt2, tgt3=tgt3, tgt4=tgt4, tgt5=tgt5, move=move_descr, resultsmode="true", scrollToAnchor="results", current_user=current_user)
     return render_template("target_weight.html", page_class="index-page", form=form, resultsmode="", current_user=current_user)
 

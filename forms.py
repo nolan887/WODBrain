@@ -2,7 +2,7 @@ from typing import AsyncGenerator
 from flask_wtf import FlaskForm
 from wtforms.widgets.html5 import TelInput, DateInput
 from wtforms import StringField, SubmitField, IntegerField
-from wtforms.fields.core import FloatField, RadioField, SelectField
+from wtforms.fields.core import DateField, FloatField, RadioField, SelectField
 from wtforms.validators import DataRequired
 from wtforms.widgets.core import Select
 
@@ -30,20 +30,45 @@ class TargetWeightForm(FlaskForm):
     movement = SelectField(
         "Barbell Movement",
         choices=[
-            ('front_squat','Front Squat'),
-            ('backsquat','Back Squat'),
-            ('overhead_squat','Overhead Squat'),
-            ('clean','Clean (Squat Clean)'),
-            ('power_clean','Power Clean'),
-            ('clean_and_jerk','Clean & Jerk'),
-            ('deadlift','Deadlift'),
-            ('snatch','Snatch (Squat Snatch)'),
-            ('power_snatch','Power Snatch'),
-            ('strict_press','Strict Press'),
-            ('push_press','Push Press'),
-            ('push_jerk','Push Jerk'),
-            ('thruster','Thruster'),
-            ('bench_press','Bench Press'),
+            ('01','Front Squat'),
+            ('02','Back Squat'),
+            ('03','Overhead Squat'),
+            ('04','Clean (Squat Clean)'),
+            ('05','Power Clean'),
+            ('06','Clean & Jerk'),
+            ('07','Deadlift'),
+            ('08','Snatch (Squat Snatch)'),
+            ('09','Power Snatch'),
+            ('10','Strict Press'),
+            ('11','Push Press'),
+            ('12','Push Jerk'),
+            ('13','Thruster'),
+            ('14','Bench Press'),
             ]
     )
     submit = SubmitField("Calculate Targets")
+
+class LogLiftForm(FlaskForm):
+    movement = SelectField(
+        "Barbell Movement",
+            choices=[
+                ('01','Front Squat'),
+                ('02','Back Squat'),
+                ('03','Overhead Squat'),
+                ('04','Clean (Squat Clean)'),
+                ('05','Power Clean'),
+                ('06','Clean & Jerk'),
+                ('07','Deadlift'),
+                ('08','Snatch (Squat Snatch)'),
+                ('09','Power Snatch'),
+                ('10','Strict Press'),
+                ('11','Push Press'),
+                ('12','Push Jerk'),
+                ('13','Thruster'),
+                ('14','Bench Press'),
+                ]
+    )
+    rep = IntegerField("How many unbroken reps?", widget=TelInput())
+    load = IntegerField("How much weight did you lift?",widget=TelInput())
+    date = DateField("Date", widget=DateInput())
+    submit = SubmitField("Log Lift")

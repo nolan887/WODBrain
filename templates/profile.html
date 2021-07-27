@@ -39,7 +39,7 @@
                         <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                             <div class="card-profile-actions py-4 mt-lg-0">
                                 <a href="/edit_profile" class="btn btn-sm btn-outline-light mr-4">Edit Profile</a>
-                                <a href="/log-lift" class="btn btn-sm btn-outline-primary float-right">Log Lift</a>
+                                <a href="/loglift" class="btn btn-sm btn-outline-primary float-right">Log Lift</a>
                             </div>
                         </div>
                         <div class="col-lg-4 order-lg-1">
@@ -65,11 +65,29 @@
                     <div class="py-5 border-top text-center">
                         <div class="row justify-content-center">
                             <div class="col-lg-9">
-                                <p>
-                                    This section needs to be filled in with the highest 1RME from the 3rd sql table
-                                </p>
-                                <p>
-                                    Maybe an href link for each lift name from the table above that brings up a modal with all lifts for current user of that movement?
+                                <table class="profile-table mb-5" style="margin: auto;">
+                                    <tr>
+                                        <th colspan="4" style="text-align: center;">
+                                            <h4>Personal Records</h4>
+                                        </th>
+                                        {% for name in liftcatalog: %}
+                                        <tr>
+                                            <td>
+                                                {{name.move}}
+                                            </td>
+                                            <td>
+                                                1rme # (rep x load)
+                                            </td>
+                                            <td>
+                                                date lifted
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tr>
+                                </table>
+                                <p class="bg-danger">
+                                    <i class="far fa-trash-alt"></i> &nbsp;&nbsp;&nbsp; <i class="far fa-edit"></i> &nbsp;&nbsp;&nbsp; <i class="far fa-plus-square"></i> Maybe an href link for each lift name from the table above that brings up a modal
+                                    with all lifts for current user of that movement?
                                 </p>
                                 <p>
                                     <a href="/logout" class="btn btn-light mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>
