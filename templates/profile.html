@@ -73,21 +73,24 @@
                                         {% for name in liftcatalog: %}
                                         <tr>
                                             <td>
-                                                {{name.move}}
+                                                {{name}}
                                             </td>
                                             <td>
-                                                1rme # (rep x load)
+                                                {{ liftdata.onerm }} 1rme # (rep x load)
                                             </td>
                                             <td>
                                                 date lifted
+                                            </td>
+                                            <td>
+                                                <a href="/wodweight"><i class="fas fa-calculator"></i></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
                                     </tr>
                                 </table>
                                 <p class="bg-danger">
-                                    <i class="far fa-trash-alt"></i> &nbsp;&nbsp;&nbsp; <i class="far fa-edit"></i> &nbsp;&nbsp;&nbsp; <i class="far fa-plus-square"></i> Maybe an href link for each lift name from the table above that brings up a modal
-                                    with all lifts for current user of that movement?
+                                    <i class="far fa-trash-alt"></i> &nbsp;&nbsp;&nbsp; <i class="far fa-edit"></i> &nbsp;&nbsp;&nbsp; <i class="far fa-plus-square"></i>
+                                    <br><br> for loop with a collapsable section for each barbell movement. header has + button, uncollapse shows all user logged lifts with edit and trash options.
                                 </p>
                                 <p>
                                     <a href="/logout" class="btn btn-light mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>

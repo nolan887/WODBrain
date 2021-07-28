@@ -15,7 +15,6 @@ from flask import Flask, request, session, abort, redirect, render_template
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import exc
 
 # GOOGLE LOGIN IMPORTS
 from google.oauth2 import id_token
@@ -196,8 +195,32 @@ def edit_profile():
 def profile():
     if current_user.is_authenticated:
         liftnames = MovementCatalog.query.all()
-        liftdata = LiftData.query.filter_by()
-        return(render_template("profile.html", page_class="profile-page", current_user=current_user, liftcatalog=liftnames))
+        # CREATES A LIST OF LIFT NAMES TO PASS INTO JINJA TEMPLATE
+        liftcatalog = []
+        for lift in liftnames:
+            liftcatalog.append(str(lift.move))
+        
+
+
+        # CREATES A LIST OF DICTIONARY ENTRIES FOR ALL OF THE CURRENT USER'S LOGGED LIFTS
+        liftdata = LiftData.query.filter_by(userid=current_user.id).all()
+        current_user_lifts = []
+        for data in liftdata:
+            move = {
+                'move': liftcatalog[int(data.liftid)-1],
+                'rep': data.reps,
+                'load': data.load,
+                'onerm': data.onerm,
+                'date': data.date,
+                'actual': data.actual_lift
+            }
+            current_user_lifts.append(move)
+
+        # MAKE A PR TABLE FROM CURRENT_USER_LIFTS TABLE WITH MAX'S ONLY
+
+
+
+        return(render_template("profile.html", page_class="profile-page", current_user=current_user, liftcatalog=liftcatalog, liftdata=current_user_lifts))
     return(redirect("/login"))
 
 
