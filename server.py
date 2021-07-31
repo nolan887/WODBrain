@@ -246,39 +246,43 @@ def profile():
 
 
 # WODBRAIN LOG LIFT (USERS ONLY)
-@app.route("/loglift/<int:lift_id>", methods=["GET","POST"])
+@app.route("/loglift/<lift_id>", methods=["GET","POST"])
 def loglift(lift_id):
-    if lift_id is not 0:
+    print(f"lift id is: {lift_id}")
+    if lift_id == "new":
         logform = LogLiftForm(
             date = datetime.date.today()
         )
-        if current_user.is_authenticated:
-            if logform.validate_on_submit():
-                onerme = one_rm_calc(
-                    rep=logform.rep.data,
-                    load=logform.load.data
-                    )
-                if logform.rep.data == 1:
-                    actual = True
-                else:
-                    actual = False
-                new_lift = LiftData(
-                    userid = current_user.id,
-                    liftid = logform.movement.data,
-                    load = logform.load.data,
-                    reps = logform.rep.data,
-                    onerm = onerme,
-                    actual_lift = actual,
-                    date = logform.date.data
-                )
-                db.session.add(new_lift)
-                db.session.commit()
-                return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="yes"))
-            else:
-                return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
     else:
-        print(lift_id)
-        return(redirect("/login"))
+        logform = LogLiftForm(
+            movement = str(lift_id),
+            date = datetime.date.today()
+        )
+    if current_user.is_authenticated:
+        if logform.validate_on_submit():
+            onerme = one_rm_calc(
+                rep=logform.rep.data,
+                load=logform.load.data
+                )
+            if logform.rep.data == 1:
+                actual = True
+            else:
+                actual = False
+            new_lift = LiftData(
+                userid = current_user.id,
+                liftid = logform.movement.data,
+                load = logform.load.data,
+                reps = logform.rep.data,
+                onerm = onerme,
+                actual_lift = actual,
+                date = logform.date.data
+            )
+            db.session.add(new_lift)
+            db.session.commit()
+            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="yes"))
+        else:
+            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
+    return(redirect("/login"))
     
 # WODBRAIN ROUTING PAGES
 @app.route("/")
