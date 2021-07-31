@@ -110,6 +110,23 @@ age_reduction = {
     89:	0.44
 }
 
+lift_dict_map = {
+    "Front Squat": '01',
+    "Back Squat": '02',
+    "Overhead Squat": '03',
+    "Clean": '04',
+    "Power Clean": '05',
+    "Clean & Jerk": '06',
+    "Deadlift": '07',
+    "Snatch": '08',
+    "Power Snatch": '09',
+    "Strict Press": '10',
+    "Push Press": '11',
+    "Push Jerk": '12',
+    "Thruster": '13',
+    "Bench Press": '14'
+    }
+
 lift_tgt_dict = {
 # Back Squat
 '02' : {

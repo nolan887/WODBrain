@@ -5,9 +5,11 @@ import requests
 import datetime
 from wtforms.fields.core import BooleanField
 
+import pprint
+
 
 # WODBRAIN IMPORTS
-from lift_tables import rep_reduction, age_reduction, lift_tgt_dict
+from lift_tables import rep_reduction, age_reduction, lift_tgt_dict, lift_dict_map
 from forms import WODWeightForm, oneRMEForm, TargetWeightForm, LifterProfileForm, LogLiftForm
 
 # FLASK IMPORTS
@@ -21,9 +23,6 @@ from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
-
-
-
 
 
 app = Flask(__name__)
@@ -91,7 +90,7 @@ flow = Flow.from_client_secrets_file(
 def login_is_required(function):
     def wrapper(*args, **kwargs):
         if "google_id" not in session:
-            abort(401) # Authorization required
+            return(redirect("/login"))
         else:
             return function()
     return wrapper
@@ -195,67 +194,91 @@ def edit_profile():
 def profile():
     if current_user.is_authenticated:
         liftnames = MovementCatalog.query.all()
-        # CREATES A LIST OF LIFT NAMES TO PASS INTO JINJA TEMPLATE
+        # CREATES A LIST OF LIFT NAMES AND AN EMPTY LIFT DICTIONARY TO PASS INTO JINJA TEMPLATE
         liftcatalog = []
+        current_journal = {}
+        pr_journal = {}
+
+        # ADD EACH LIFT NAME TO THE LIFT CATALOG
         for lift in liftnames:
             liftcatalog.append(str(lift.move))
-        
+            movename = liftcatalog[int(lift.id)-1]
+            current_journal[movename] = {}
+            pr_journal[movename] = {
+                'rep': 0,
+                'load': 0,
+                'onerm': 0,
+                'date': 0,
+                'actual': True
+            }
 
-
-        # CREATES A LIST OF DICTIONARY ENTRIES FOR ALL OF THE CURRENT USER'S LOGGED LIFTS
+        # ADD ALL OF THE CURRENT USER'S LOGGED LIFTS TO THE LIFT DICTIONARY
         liftdata = LiftData.query.filter_by(userid=current_user.id).all()
-        current_user_lifts = []
+
         for data in liftdata:
-            move = {
-                'move': liftcatalog[int(data.liftid)-1],
+            movename = liftcatalog[int(data.liftid)-1]
+            wdbkey = data.wodbrainlift
+            entry = {
                 'rep': data.reps,
                 'load': data.load,
                 'onerm': data.onerm,
                 'date': data.date,
                 'actual': data.actual_lift
             }
-            current_user_lifts.append(move)
-
+            current_journal[movename][wdbkey] = entry
+        
         # MAKE A PR TABLE FROM CURRENT_USER_LIFTS TABLE WITH MAX'S ONLY
-
-
-
-        return(render_template("profile.html", page_class="profile-page", current_user=current_user, liftcatalog=liftcatalog, liftdata=current_user_lifts))
+        # LOOP THROUGH EACH MOVEMENT SUB-DICTIONARY
+        for move in liftcatalog:
+            logged_onerm = 0
+            
+            # LOOP THROUGH EACH SUB-DICTIONARY LIFT TO FIND MAX
+            for lifts in current_journal[move].items():
+                # PULL ONE RME VALUE FROM CURRENT_JOURNAL
+                possible_onerm = lifts[1]['onerm']
+                if possible_onerm > logged_onerm:
+                    logged_onerm = possible_onerm
+                    # OVERWRITE PR JOURNAL WITH NEW MAX
+                    pr_journal[move] = lifts[1]
+        return(render_template("profile.html", page_class="profile-page", current_user=current_user, liftcatalog=liftcatalog, liftdata=current_journal, pr_journal=pr_journal, liftnumbers=lift_dict_map))
     return(redirect("/login"))
 
 
 
 # WODBRAIN LOG LIFT (USERS ONLY)
-@app.route("/loglift", methods=["GET","POST"])
-def loglift():
-    logform = LogLiftForm(
-        date = datetime.date.today()
-    )
-    if current_user.is_authenticated:
-        if logform.validate_on_submit():
-            onerme = one_rm_calc(
-                rep=logform.rep.data,
-                load=logform.load.data
+@app.route("/loglift/<int:lift_id>", methods=["GET","POST"])
+def loglift(lift_id):
+    if lift_id is not 0:
+        logform = LogLiftForm(
+            date = datetime.date.today()
+        )
+        if current_user.is_authenticated:
+            if logform.validate_on_submit():
+                onerme = one_rm_calc(
+                    rep=logform.rep.data,
+                    load=logform.load.data
+                    )
+                if logform.rep.data == 1:
+                    actual = True
+                else:
+                    actual = False
+                new_lift = LiftData(
+                    userid = current_user.id,
+                    liftid = logform.movement.data,
+                    load = logform.load.data,
+                    reps = logform.rep.data,
+                    onerm = onerme,
+                    actual_lift = actual,
+                    date = logform.date.data
                 )
-            if logform.rep.data == 1:
-                actual = True
+                db.session.add(new_lift)
+                db.session.commit()
+                return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="yes"))
             else:
-                actual = False
-            new_lift = LiftData(
-                userid = current_user.id,
-                liftid = logform.movement.data,
-                load = logform.load.data,
-                reps = logform.rep.data,
-                onerm = onerme,
-                actual_lift = actual,
-                date = logform.date.data
-            )
-            db.session.add(new_lift)
-            db.session.commit()
-            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="yes"))
-        else:
-            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
-    return(redirect("/login"))
+                return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
+    else:
+        print(lift_id)
+        return(redirect("/login"))
     
 # WODBRAIN ROUTING PAGES
 @app.route("/")

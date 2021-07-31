@@ -75,15 +75,28 @@
                                             <td>
                                                 {{name}}
                                             </td>
+                                            {% if pr_journal[name]['onerm'] == 0 %}
                                             <td>
-                                                {{ liftdata.onerm }} 1rme # (rep x load)
+                                                <span class="small">No Lift Logged</span>
                                             </td>
                                             <td>
-                                                date lifted
+                                                <span class="small"> -- </span>
+                                            </td>
+                                            <td>
+                                                <a href="#loglift/{{liftnumbers[name]}}"><i class="fas far fa-plus-square"></i></a>
+                                            </td>
+                                            {% else %}
+                                            <td>
+                                                {{ pr_journal[name]['onerm'] }}# {% if pr_journal[name]['actual'] == False %}
+                                                <br><span class="small">({{ pr_journal[name]['rep'] }} x {{ pr_journal[name]['load'] }})</span> {% endif %}
+                                            </td>
+                                            <td>
+                                                <span class="small">{{ pr_journal[name]['date'] }}</span>
                                             </td>
                                             <td>
                                                 <a href="/wodweight"><i class="fas fa-calculator"></i></a>
                                             </td>
+                                            {% endif %}
                                         </tr>
                                         {% endfor %}
                                     </tr>
@@ -93,7 +106,7 @@
                                     <br><br> for loop with a collapsable section for each barbell movement. header has + button, uncollapse shows all user logged lifts with edit and trash options.
                                 </p>
                                 <p>
-                                    <a href="/logout" class="btn btn-light mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                    <a href="/logout" id="Front Squat" class="btn btn-light mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>
                                 </p>
                             </div>
                         </div>
