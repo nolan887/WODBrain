@@ -56,7 +56,6 @@ class User(db.Model, UserMixin):
 class MovementCatalog(db.Model):
     __tablename__ = "move-cat"
     id = db.Column(db.String(2), primary_key=True)
-    lift_table_name = db.Column(db.String(25))
     move = db.Column(db.String(25))
 
 # Create the Lift data Tables
@@ -65,9 +64,9 @@ class LiftData(db.Model):
     wodbrainlift = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.String(2))
     liftid = db.Column(db.String(2))
-    load = db.Column(db.Float(6))
+    load = db.Column(db.Integer)
     reps = db.Column(db.Integer)
-    onerm = db.Column(db.Float(6))
+    onerm = db.Column(db.Integer)
     actual_lift = db.Column(db.Boolean)
     date = db.Column(db.Date)
 
@@ -248,7 +247,6 @@ def profile():
 # WODBRAIN LOG LIFT (USERS ONLY)
 @app.route("/loglift/<lift_id>", methods=["GET","POST"])
 def loglift(lift_id):
-    print(f"lift id is: {lift_id}")
     if lift_id == "new":
         logform = LogLiftForm(
             date = datetime.date.today()
@@ -293,9 +291,17 @@ def home():
 def phone():
     return render_template("phoneapp.html", page_class="index-page", current_user=current_user)
 
-@app.route("/wodweight", methods=["GET","POST"])
-def wodweight():
-    wodform = WODWeightForm()
+# TODO: Add button to log lift after calculation (if logged in only)
+# TODO: integrate movement into hyperlink, use movement to pass back to loglift form
+
+@app.route("/wodweight/<lift_id>/<wt>", methods=["GET","POST"])
+def wodweight(lift_id, wt):
+    if lift_id == "new":
+        wodform = WODWeightForm()
+    else:
+        wodform = WODWeightForm(
+            one_rm = int(float(wt))
+        )
     if wodform.validate_on_submit():
         one_rm = wodform.one_rm.data
         wod_reps = wodform.wod_reps.data
@@ -355,6 +361,8 @@ def targets():
         elif bwt > 310:
             bwt = 310
         result = lift_tgt_dict[tw_mvmt][tw_sex][bwt]
+# TODO: LOOP FOR THESE RESUTLS AND SEND AS LIST INSTEAD OF 5 TGT TEXTS, ALSO LOOP ON HTML SHEET
+
         tgt1 = result[0] * age_reducer * bwt
         tgt2 = result[1] * age_reducer * bwt
         tgt3 = result[2] * age_reducer * bwt
