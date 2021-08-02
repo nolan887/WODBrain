@@ -17,17 +17,17 @@ Coded by www.creative-tim.com
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../static/img/wodbrain_logo_circ_black.png">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/wodbrain_logo_circ_black.png') }}">
     <!-- App Settings for iOS -->
-    <link rel="apple-touch-icon" sizes="76x76" href="../static/img/wodbrain-apple-icon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='img/wodbrain-apple-icon.png') }}">
     <meta name="apple-mobile-web-app-title" content="WODBrain">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-    <link rel="apple-touch-startup-image" href="../static/img/launch-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="../static/img/launch-750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="../static/img/launch-1242x2148.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="../static/img/launch-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='img/launch-640x1136.png') }}" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='img/launch-750x1294.png') }}" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='img/launch-1242x2148.png') }}" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='img/launch-1125x2436.png') }}" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 
     <!--  App Settings for Android-->
     <link rel="manifest" href="https://www.wodbrain.app/manifest.json">
@@ -38,10 +38,10 @@ Coded by www.creative-tim.com
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <!-- Font Awesome Icons -->
-    <link href="../static/css/font-awesome.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/b6299b8380.js" crossorigin="anonymous"></script>
     <!-- CSS Files -->
-    <link href="../static/css/argon-design-system.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/argon-design-system.css') }}" rel="stylesheet" />
 
 </head>
 
@@ -58,7 +58,7 @@ Coded by www.creative-tim.com
                     <a class="nav-link" href="/mobile"><i class="fas fa-power-off"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/wodweight"><i class="fas fa-calculator"></i> WOD Weight</a>
+                    <a class="nav-link" href="/wodweight/new/new"><i class="fas fa-calculator"></i> WOD Weight</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/onerme"><i class="fas fa-crown"></i> 1RM Equivalent</a>
@@ -83,7 +83,7 @@ Coded by www.creative-tim.com
                 </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/phone"><i class="fab fa-app-store"></i> Save App</a>
+                    <a class="nav-link" href="/phone"><i class="fab fa-app-store"></i> Download App</a>
                 </li>
             </ul>
         </div>
