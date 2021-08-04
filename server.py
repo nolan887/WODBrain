@@ -328,7 +328,6 @@ def onerme():
 @app.route("/targets", methods=["GET","POST"])
 def targets():
     if current_user.is_authenticated:
-        print("logged in")
         form = TargetWeightForm(
             sex = current_user.sex,
             age = current_user.age,
@@ -360,21 +359,16 @@ def targets():
             bwt = 260
         elif bwt > 310:
             bwt = 310
+        # Generate list of targets to pass into webpage
         result = lift_tgt_dict[tw_mvmt][tw_sex][bwt]
-# TODO: LOOP FOR THESE RESUTLS AND SEND AS LIST INSTEAD OF 5 TGT TEXTS, ALSO LOOP ON HTML SHEET
-
-        tgt1 = result[0] * age_reducer * bwt
-        tgt2 = result[1] * age_reducer * bwt
-        tgt3 = result[2] * age_reducer * bwt
-        tgt4 = result[3] * age_reducer * bwt
-        tgt5 = result[4] * age_reducer * bwt
-        tgt1 = int(tgt1 - tgt1 % 5)
-        tgt2 = int(tgt2 - tgt2 % 5)
-        tgt3 = int(tgt3 - tgt3 % 5)
-        tgt4 = int(tgt4 - tgt4 % 5)
-        tgt5 = int(tgt5 - tgt5 % 5)
+        targets = []
+        for x in range(5):
+            tgt = result[x] * age_reducer * bwt
+            tgt = int(tgt - tgt % 5)
+            targets.append(tgt)
+        # Pass in movement name
         move_descr = str(db.session.query(MovementCatalog.move).filter_by(id=tw_mvmt).first()).strip(")(,'")
-        return render_template("target_weight.html", page_class="index-page", form=form, tgt1=tgt1, tgt2=tgt2, tgt3=tgt3, tgt4=tgt4, tgt5=tgt5, move=move_descr, resultsmode="true", scrollToAnchor="results", current_user=current_user)
+        return render_template("target_weight.html", page_class="index-page", form=form, targets=targets, move=move_descr, resultsmode="true", scrollToAnchor="results", current_user=current_user)
     return render_template("target_weight.html", page_class="index-page", form=form, resultsmode="", current_user=current_user)
 
 @app.route("/mobile")
