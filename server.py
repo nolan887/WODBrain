@@ -245,17 +245,32 @@ def profile():
 
 
 # WODBRAIN LOG LIFT (USERS ONLY)
-@app.route("/loglift/<lift_id>", methods=["GET","POST"])
-def loglift(lift_id):
-    if lift_id == "new":
+@app.route("/loglift/<lift_id>/<wt>", methods=["GET","POST"])
+def loglift(lift_id, wt):
+# Load correct form based on where the user is being directed from
+    if lift_id == "new" and wt == "new":
         logform = LogLiftForm(
             date = datetime.date.today()
         )
-    else:
+    elif lift_id == "new" and wt != "new":
+        logform = LogLiftForm(
+            load = str(wt),
+            date = datetime.date.today()
+        )
+    elif lift_id != "new" and wt == "new":
         logform = LogLiftForm(
             movement = str(lift_id),
             date = datetime.date.today()
         )
+    elif lift_id != "new" and wt != "new":
+        logform = LogLiftForm(
+            load = str(wt),
+            movement = str(lift_id),
+            date = datetime.date.today()
+        )
+    else:
+        logform = LogLiftForm()
+# Commit loglift form to SQL if the user is logged in and submits form
     if current_user.is_authenticated:
         if logform.validate_on_submit():
             onerme = one_rm_calc(
