@@ -5032,10 +5032,10 @@ input[type="button"].btn-block {
 }
 
 .card-header {
-    padding: 1.25rem 1.5rem;
+    padding: 0.25rem 1.5rem;
     margin-bottom: 0;
     background-color: #f6f9fc;
-    border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.05);
+    border-bottom: .125rem solid rgba(0, 0, 0, 0.05);
 }
 
 .card-header:first-child {
