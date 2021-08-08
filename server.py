@@ -1,6 +1,7 @@
 # GENERAL IMPORTS
 import os
 import pathlib
+from re import A
 import requests
 import datetime
 from wtforms.fields.core import BooleanField
@@ -134,13 +135,13 @@ def callback():
     session["name"] = id_info.get("name")
 
     if User.query.filter_by(id=session["google_id"]).first():
-        print("in database")
+        # IN DATABASE
         g_userid = session.get('google_id')
         existing_user = User.query.get(g_userid)
         login_user(existing_user)
         return redirect("/mobile")
     else:
-        print("not in database")        
+        # NOT IN DATABASE
         new_id = str(session["google_id"])
         new_email = str(session["google_email"])
         new_name = str(session["name"])
@@ -296,7 +297,26 @@ def loglift(lift_id, wt):
         else:
             return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
     return(redirect("/login"))
-    
+
+
+
+@app.route("/editlift/<id>", methods=["GET", "POST"])
+def editlift(id):
+    if current_user.is_authenticated:
+        print(f"edited lift for {id}")
+        return(redirect("/profile"))
+    return(redirect("/login"))
+
+@app.route("/deletelift/<id>", methods=["GET", "POST"])
+def deletelift(id):
+    if current_user.is_authenticated:
+        lift_to_delete = LiftData.query.get(id)
+        db.session.delete(lift_to_delete)
+        db.session.commit()
+        return(redirect("/profile"))
+    return(redirect("/login"))
+
+
 # WODBRAIN ROUTING PAGES
 @app.route("/")
 def home():
@@ -305,9 +325,6 @@ def home():
 @app.route("/phone")
 def phone():
     return render_template("phoneapp.html", page_class="index-page", current_user=current_user)
-
-# TODO: Add button to log lift after calculation (if logged in only)
-# TODO: integrate movement into hyperlink, use movement to pass back to loglift form
 
 @app.route("/wodweight/<lift_id>/<wt>", methods=["GET","POST"])
 def wodweight(lift_id, wt):
