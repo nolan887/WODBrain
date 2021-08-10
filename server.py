@@ -245,7 +245,7 @@ def profile():
 
 
 
-# WODBRAIN LOG LIFT (USERS ONLY)
+# WODBRAIN LOG LIFT INTERACTIONS
 @app.route("/loglift/<lift_id>/<wt>", methods=["GET","POST"])
 def loglift(lift_id, wt):
 # Load correct form based on where the user is being directed from
@@ -298,13 +298,44 @@ def loglift(lift_id, wt):
             return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
     return(redirect("/login"))
 
-
-
-@app.route("/editlift/<id>", methods=["GET", "POST"])
+@app.route("/editlift/<int:id>", methods=["GET", "POST"])
 def editlift(id):
+    # Verify user is logged in
     if current_user.is_authenticated:
-        print(f"edited lift for {id}")
-        return(redirect("/profile"))
+        # Pull SQL data for lift to edit
+        lift_to_edit = LiftData.query.get(id)
+        # Pre-populate the form with SQL data
+        editform = LogLiftForm(
+                movement = lift_to_edit.liftid,
+                rep = lift_to_edit.reps,
+                load = lift_to_edit.load,
+                date = lift_to_edit.date,
+        )
+        # Create new lift for submitted form
+        if editform.validate_on_submit():
+            onerme = one_rm_calc(
+                rep=editform.rep.data,
+                load=editform.load.data
+                )
+            if editform.rep.data == 1:
+                actual = True
+            else:
+                actual = False
+            new_lift = LiftData(
+                userid = current_user.id,
+                liftid = editform.movement.data,
+                load = editform.load.data,
+                reps = editform.rep.data,
+                onerm = onerme,
+                actual_lift = actual,
+                date = editform.date.data
+            )
+            # Add new lift, delete "edit" lift, commit to database
+            db.session.add(new_lift)
+            db.session.delete(lift_to_edit)
+            db.session.commit()
+            return(redirect("/profile"))
+        return(render_template("editlift.html", form=editform, page_class="index-page", current_user=current_user))
     return(redirect("/login"))
 
 @app.route("/deletelift/<id>", methods=["GET", "POST"])
