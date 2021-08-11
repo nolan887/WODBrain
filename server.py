@@ -6,9 +6,6 @@ import requests
 import datetime
 from wtforms.fields.core import BooleanField
 
-import pprint
-
-
 # WODBRAIN IMPORTS
 from lift_tables import rep_reduction, age_reduction, lift_tgt_dict, lift_dict_map
 from forms import WODWeightForm, oneRMEForm, TargetWeightForm, LifterProfileForm, LogLiftForm
@@ -332,7 +329,6 @@ def loglift(lift_id, wt):
                 rep=logform.rep.data,
                 load=logform.load.data
             )
-            print(f"calc'd level is {level}")
 
             onerme = one_rm_calc(
                 rep=logform.rep.data,
@@ -398,7 +394,7 @@ def editlift(id):
                 onerm = onerme,
                 actual_lift = actual,
                 date = editform.date.data,
-                level = level
+                lvl = level
             )
             # Add new lift, delete "edit" lift, commit to database
             db.session.add(new_lift)
