@@ -42,7 +42,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///wodbrain-database.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-##CONFIGURE TABLES
+#CONFIGURE TABLES
 # Create the User Table
 class User(db.Model, UserMixin):
     __tablename__ = "user"
@@ -70,6 +70,7 @@ class LiftData(db.Model):
     onerm = db.Column(db.Integer)
     actual_lift = db.Column(db.Boolean)
     date = db.Column(db.Date)
+    lvl = db.Column(db.String(3))
 
 # CREAT ALL TABLES IN DB
 db.create_all()
@@ -95,6 +96,9 @@ def login_is_required(function):
             return function()
     return wrapper
 
+
+
+# WODBRAIN CUSTOM FUNCTIONS
 def one_rm_calc(rep, load):
     if rep > 30:
         rep = 30
@@ -102,6 +106,53 @@ def one_rm_calc(rep, load):
     pure_onerme = load / rep_factor
     one_rm_result = int(pure_onerme - pure_onerme % 5)
     return one_rm_result
+
+def bw_adjust_calc(bw, sex):
+    bwt = int(bw - bw % 10)
+    if bwt < 90 and sex == 'f':
+        bwt = 90
+    elif bwt < 110:
+        bwt = 110
+    elif bwt > 260 and sex == 'f':
+        bwt = 260
+    elif bwt > 310:
+        bwt = 310
+    bw_adjust = bwt
+    return bw_adjust
+
+def lift_target_list_calc(move, sex, bw, age):
+    if age < 14:
+        age = 14
+    elif age > 89:
+        age = 89
+    age_reducer = age_reduction[age]
+    result = lift_tgt_dict[move][sex][bw]
+    tgt_list = []
+    for x in range(5):
+        tgt = result[x] * age_reducer * bw
+        tgt = int(tgt - tgt % 5)
+        tgt_list.append(tgt)
+    return tgt_list
+
+def lift_lvl_calc(age, bw, sex, move, rep, load):
+    bwt = bw_adjust_calc(bw=bw, sex=sex)
+    onerme = one_rm_calc(rep, load)
+    tgt_list = lift_target_list_calc(move, sex, bwt, age)
+    if onerme < tgt_list[0]:
+        level = "n/a"
+    elif onerme < tgt_list[1]:
+        level = "I"
+    elif onerme < tgt_list[2]:
+        level = "II"
+    elif onerme < tgt_list[3]:
+        level = "III"
+    elif onerme < tgt_list [4]:
+        level = "IV"
+    else:
+        level = "V"
+    return level
+
+
 
 # WODBRAIN LOGIN HANDLING
 @app.route("/login")
@@ -159,13 +210,11 @@ def callback():
         login_user(new_user)
         return redirect("/edit_profile")
 
-
 @app.route("/logout")
 def logout():
     session.clear()
     logout_user()
     return redirect("/mobile")
-
 
 
 
@@ -274,6 +323,17 @@ def loglift(lift_id, wt):
 # Commit loglift form to SQL if the user is logged in and submits form
     if current_user.is_authenticated:
         if logform.validate_on_submit():
+
+            level = lift_lvl_calc(
+                age=current_user.age,
+                bw=current_user.bw,
+                sex=current_user.sex,
+                move=logform.movement.data,
+                rep=logform.rep.data,
+                load=logform.load.data
+            )
+            print(f"calc'd level is {level}")
+
             onerme = one_rm_calc(
                 rep=logform.rep.data,
                 load=logform.load.data
@@ -289,7 +349,8 @@ def loglift(lift_id, wt):
                 reps = logform.rep.data,
                 onerm = onerme,
                 actual_lift = actual,
-                date = logform.date.data
+                date = logform.date.data,
+                lvl = level
             )
             db.session.add(new_lift)
             db.session.commit()
@@ -321,6 +382,14 @@ def editlift(id):
                 actual = True
             else:
                 actual = False
+            level = lift_lvl_calc(
+                age=current_user.age,
+                bw=current_user.bw,
+                sex=current_user.sex,
+                move=editform.movement.data,
+                rep=editform.rep.data,
+                load=editform.load.data
+                )
             new_lift = LiftData(
                 userid = current_user.id,
                 liftid = editform.movement.data,
@@ -328,7 +397,8 @@ def editlift(id):
                 reps = editform.rep.data,
                 onerm = onerme,
                 actual_lift = actual,
-                date = editform.date.data
+                date = editform.date.data,
+                level = level
             )
             # Add new lift, delete "edit" lift, commit to database
             db.session.add(new_lift)
@@ -404,31 +474,10 @@ def targets():
         tw_age = form.age.data
         tw_bodywt = form.bw.data
         tw_mvmt = form.movement.data
-        # Move age to within acceptable bounds
-        if tw_age < 14:
-            tw_age = 14
-        elif tw_age > 89:
-            tw_age = 89
-        # Calculate factor for age reduction
-        age_reducer = age_reduction[tw_age]
-        # Round body weight to the nearest 10 lb increment
-        bwt = int(tw_bodywt - tw_bodywt % 10)
-        # Move weight to within acceptable bounds
-        if bwt < 90 and tw_sex == 'f':
-            bwt = 90
-        elif bwt < 110:
-            bwt = 110
-        elif bwt > 260 and tw_sex == 'f':
-            bwt = 260
-        elif bwt > 310:
-            bwt = 310
-        # Generate list of targets to pass into webpage
-        result = lift_tgt_dict[tw_mvmt][tw_sex][bwt]
-        targets = []
-        for x in range(5):
-            tgt = result[x] * age_reducer * bwt
-            tgt = int(tgt - tgt % 5)
-            targets.append(tgt)
+
+        bwt = bw_adjust_calc(bw=tw_bodywt, sex=tw_sex)
+        targets = lift_target_list_calc(move=tw_mvmt, sex=tw_sex, bw=bwt, age=tw_age)
+
         # Pass in movement name
         move_descr = str(db.session.query(MovementCatalog.move).filter_by(id=tw_mvmt).first()).strip(")(,'")
         return render_template("target_weight.html", page_class="index-page", form=form, targets=targets, move=move_descr, resultsmode="true", scrollToAnchor="results", current_user=current_user)
