@@ -71,35 +71,42 @@
                                         <th colspan="4" style="text-align: center;">
                                             <h4>Personal Records</h4>
                                         </th>
-                                        {% for name in liftcatalog: %}
-                                        <tr>
-                                            <td>
-                                                {{name}}
-                                            </td>
-                                            {% if pr_journal[name]['onerm'] == 0 %}
-                                            <td>
-                                                <span class="small">No Lift Logged</span>
-                                            </td>
-                                            <td>
-                                                <span class="small"> -- </span>
-                                            </td>
-                                            <td>
-                                                &nbsp;&nbsp;&nbsp;<a href="/loglift/{{liftnumbers[name]}}/new"><i class="far fa-plus-square"></i></a>&nbsp;&nbsp;&nbsp;
-                                            </td>
-                                            {% else %}
-                                            <td>
-                                                {{ pr_journal[name]['onerm'] }}# {% if pr_journal[name]['actual'] == False %}
-                                                <br><span class="small">({{ pr_journal[name]['rep'] }} x {{ pr_journal[name]['load'] }})</span> {% endif %}
-                                            </td>
-                                            <td>
-                                                <span class="small">{{ pr_journal[name]['date'] }}</span>
-                                            </td>
-                                            <td>
-                                                &nbsp;&nbsp;&nbsp;<a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator"></i> </a>&nbsp;&nbsp;&nbsp;
-                                            </td>
-                                            {% endif %}
-                                        </tr>
-                                        {% endfor %}
+                                    </tr>
+                                    {% for name in liftcatalog: %}
+                                    <tr>
+                                        <td>
+                                            {{name}}
+                                        </td>
+                                        {% if pr_journal[name]['onerm'] == 0 %}
+                                        <td>
+                                            <span class="small">No Lift Logged</span>
+                                        </td>
+                                        <td>
+                                            <span class="small"> -- </span>
+                                        </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;<a href="/loglift/{{liftnumbers[name]}}/new"><i class="far fa-plus-square"></i></a>&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        {% else %}
+                                        <td>
+                                            {{ pr_journal[name]['onerm'] }}# {% if pr_journal[name]['actual'] == False %}
+                                            <br><span class="small">({{ pr_journal[name]['rep'] }} x {{ pr_journal[name]['load'] }})</span> {% endif %}
+                                        </td>
+                                        <td>
+                                            <span class="small">Lift Level {{ pr_journal[name]['level'] }}</span>
+                                        </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;<a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator"></i> </a>&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <th colspan="4" style="text-align: center;">
+                                            <br><span class="btn btn-primary btn-icon mb-3 mb-sm-0" data-toggle="modal" data-target="#modal-level-dfn">
+                                                <span class="btn-inner--text">Define Levels</span>
+                                            </span>
+                                        </th>
                                     </tr>
                                 </table>
                                 <div class="py-4 text-center border-top">
@@ -143,7 +150,12 @@
                                                                     </tr>
                                                                     {% endfor %}
                                                                 </table>
-                                                                {% else %} No lifts logged for {{ name }} <a href="/loglift/{{liftnumbers[name]}}/new" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a> {%endif%}
+                                                                <span>
+                                                                    <br><a href="/loglift/{{liftnumbers[name]}}/new" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
+                                                                </span>
+                                                                <span>
+                                                                    {% else %} No lifts logged for {{ name }} <a href="/loglift/{{liftnumbers[name]}}/new" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a> {%endif%}
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -156,6 +168,32 @@
                                 <p>
                                     <a href="/logout" id="logout-profile" class="btn btn-outline-primary mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="modal fade" id="modal-level-dfn" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="modal-title-default">Lifter Level Definitions</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <p><span style="font-weight: bold;">Level I:</span> Stronger than 5% of lifters. A beginner lifter can perform the movement correctly and has practiced it for at least a month.</p>
+                                <p><span style="font-weight: bold;">Level II:</span> Stronger than 20% of lifters. A novice lifter has trained regularly in the technique for at least six months.</p>
+                                <p><span style="font-weight: bold;">Level III:</span> Stronger than 50% of lifters. An intermediate lifter has trained regularly in the technique for at least two years.</p>
+                                <p><span style="font-weight: bold;">Level IV:</span> Stronger than 80% of lifters. An advanced lifter has progressed for over five years.</p>
+                                <p><span style="font-weight: bold;">Level V:</span> Stronger than 95% of lifters. An elite lifter has dedicated over five years to become competitive at strength sports.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
                             </div>
                         </div>
                     </div>

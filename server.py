@@ -149,6 +149,66 @@ def lift_lvl_calc(age, bw, sex, move, rep, load):
         level = "V"
     return level
 
+def get_lift_catalog():
+    liftnames = MovementCatalog.query.all()
+    catalog = []
+    for lift in liftnames:
+        catalog.append(str(lift.move))
+    return catalog
+
+def get_user_journal():
+    journal = {} # Blank dictionary
+    liftnames = MovementCatalog.query.all() #SQL lift name and numbers
+    liftdata = LiftData.query.filter_by(userid=current_user.id).all() #SQL all lifts for current user
+    liftcatalog = get_lift_catalog()
+
+    # Create blank journal with lift names
+    for lift in liftnames:
+        movename = liftcatalog[int(lift.id)-1]
+        journal[movename] = {}
+
+    # Populate blank journal with actual data
+    for data in liftdata:
+        movename = liftcatalog[int(data.liftid)-1]
+        wdbkey = data.wodbrainlift
+        entry = {
+                'rep': data.reps,
+                'load': data.load,
+                'onerm': data.onerm,
+                'date': data.date,
+                'actual': data.actual_lift,
+                'level': data.lvl
+                }
+        journal[movename][wdbkey] = entry
+
+    return journal
+
+def get_pr_journal():
+    journal = {} # Blank dictionary
+    liftnames = MovementCatalog.query.all() # SQL movement name and numbers
+    liftcatalog = get_lift_catalog()
+    current_journal = get_user_journal()
+
+    # Create blank PR Journal with lift names
+    for lift in liftnames:
+        movename = liftcatalog[int(lift.id)-1]
+        journal[movename] = {
+                'rep': 0,
+                'load': 0,
+                'onerm': 0,
+                'date': 0,
+                'actual': True,
+                'level': 0
+                }
+
+    # Fill in blank PR journal with actual 1RM/E's
+    for move in liftcatalog:
+        logged_onerm = 0
+        for lifts in current_journal[move].items():
+            possible_onerm = lifts[1]['onerm']
+            if possible_onerm > logged_onerm:
+                journal[move] = lifts[1]
+    return journal
 
 
 # WODBRAIN LOGIN HANDLING
@@ -239,53 +299,9 @@ def edit_profile():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if current_user.is_authenticated:
-        liftnames = MovementCatalog.query.all()
-        # CREATES A LIST OF LIFT NAMES AND AN EMPTY LIFT DICTIONARY TO PASS INTO JINJA TEMPLATE
-        liftcatalog = []
-        current_journal = {}
-        pr_journal = {}
-
-        # ADD EACH LIFT NAME TO THE LIFT CATALOG
-        for lift in liftnames:
-            liftcatalog.append(str(lift.move))
-            movename = liftcatalog[int(lift.id)-1]
-            current_journal[movename] = {}
-            pr_journal[movename] = {
-                'rep': 0,
-                'load': 0,
-                'onerm': 0,
-                'date': 0,
-                'actual': True
-            }
-
-        # ADD ALL OF THE CURRENT USER'S LOGGED LIFTS TO THE LIFT DICTIONARY
-        liftdata = LiftData.query.filter_by(userid=current_user.id).all()
-
-        for data in liftdata:
-            movename = liftcatalog[int(data.liftid)-1]
-            wdbkey = data.wodbrainlift
-            entry = {
-                'rep': data.reps,
-                'load': data.load,
-                'onerm': data.onerm,
-                'date': data.date,
-                'actual': data.actual_lift
-            }
-            current_journal[movename][wdbkey] = entry
-        
-        # MAKE A PR TABLE FROM CURRENT_USER_LIFTS TABLE WITH MAX'S ONLY
-        # LOOP THROUGH EACH MOVEMENT SUB-DICTIONARY
-        for move in liftcatalog:
-            logged_onerm = 0
-            
-            # LOOP THROUGH EACH SUB-DICTIONARY LIFT TO FIND MAX
-            for lifts in current_journal[move].items():
-                # PULL ONE RME VALUE FROM CURRENT_JOURNAL
-                possible_onerm = lifts[1]['onerm']
-                if possible_onerm > logged_onerm:
-                    logged_onerm = possible_onerm
-                    # OVERWRITE PR JOURNAL WITH NEW MAX
-                    pr_journal[move] = lifts[1]
+        liftcatalog = get_lift_catalog()
+        current_journal = get_user_journal()
+        pr_journal = get_pr_journal()
         return(render_template("profile.html", page_class="profile-page", current_user=current_user, liftcatalog=liftcatalog, liftdata=current_journal, pr_journal=pr_journal, liftnumbers=lift_dict_map))
     return(redirect("/login"))
 
@@ -334,6 +350,7 @@ def loglift(lift_id, wt):
                 rep=logform.rep.data,
                 load=logform.load.data
                 )
+
             if logform.rep.data == 1:
                 actual = True
             else:
