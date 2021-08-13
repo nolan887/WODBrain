@@ -93,10 +93,15 @@
                                             <br><span class="small">({{ pr_journal[name]['rep'] }} x {{ pr_journal[name]['load'] }})</span> {% endif %}
                                         </td>
                                         <td>
-                                            <span class="small">Lift Level {{ pr_journal[name]['level'] }}</span>
+                                            <span class="small"> Level {{ pr_journal[name]['level'] }} </span>
                                         </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;<a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator"></i> </a>&nbsp;&nbsp;&nbsp;
+
+
+                                            <!-- TODO: PASS IN LEVEL AND 1RM, ALSO NEED TO UPDATE ROUTING -->
+
+                                            &nbsp;&nbsp;&nbsp;<a href="/targets/{{ liftnumbers[name] }}"><i class="fas fa-bullseye"></i></a> &nbsp;&nbsp;&nbsp;
+                                            <a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator"></i> </a>&nbsp;&nbsp;&nbsp;
                                         </td>
                                         {% endif %}
                                     </tr>

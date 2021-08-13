@@ -471,13 +471,14 @@ def onerme():
         return render_template("1rme.html", page_class="index-page", onermestring=onermestring, onerme=onerme, form=one_rme_form, scrollToAnchor="results", current_user=current_user)
     return render_template("1rme.html", page_class="index-page", form=one_rme_form, onermestring="", current_user=current_user)
 
-@app.route("/targets", methods=["GET","POST"])
-def targets():
+@app.route("/targets/<lift_id>", methods=["GET","POST"])
+def targets(lift_id):
     if current_user.is_authenticated:
         form = TargetWeightForm(
             sex = current_user.sex,
             age = current_user.age,
-            bw = current_user.bw
+            bw = current_user.bw,
+            movement = str(lift_id)
         )
     else:
         form = TargetWeightForm()
