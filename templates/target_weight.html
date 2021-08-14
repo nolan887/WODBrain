@@ -46,6 +46,22 @@
                 <h2 class="text-secondary">Target 1RM Weight: {{ move }}</h2>
                 <div class="col-sm">
                     <table>
+                        {% if onerm != 0 and liftlvl != "na" %}
+                        <tr>
+                            <td>
+                                Level {{ liftlvl }}
+                            </td>
+                            <td>
+                                {{ onerm }}#
+                            </td>
+                            <td>
+                                <small>{{ current_user.name }}</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="bg-secondary"></td>
+                        </tr>
+                        {% endif %}
                         <tr>
                             <td>
                                 Level I
@@ -129,6 +145,22 @@
                     </div>
                     <div class="modal-body">
                         <table class="modal-table">
+                            {% if onerm != 0 and liftlvl != "na" %}
+                            <tr>
+                                <td>
+                                    Level {{ liftlvl }}
+                                </td>
+                                <td>
+                                    {{ onerm }}#
+                                </td>
+                                <td>
+                                    <small>{{ current_user.name }}</small>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="bg-primary"></td>
+                            </tr>
+                            {% endif %}
                             <tr>
                                 <td>
                                     Level I

@@ -471,8 +471,8 @@ def onerme():
         return render_template("1rme.html", page_class="index-page", onermestring=onermestring, onerme=onerme, form=one_rme_form, scrollToAnchor="results", current_user=current_user)
     return render_template("1rme.html", page_class="index-page", form=one_rme_form, onermestring="", current_user=current_user)
 
-@app.route("/targets/<lift_id>", methods=["GET","POST"])
-def targets(lift_id):
+@app.route("/targets/<lift_id>/<load>/<lvl>", methods=["GET","POST"])
+def targets(lift_id, load, lvl):
     if current_user.is_authenticated:
         form = TargetWeightForm(
             sex = current_user.sex,
@@ -494,7 +494,7 @@ def targets(lift_id):
 
         # Pass in movement name
         move_descr = str(db.session.query(MovementCatalog.move).filter_by(id=tw_mvmt).first()).strip(")(,'")
-        return render_template("target_weight.html", page_class="index-page", form=form, targets=targets, move=move_descr, resultsmode="true", scrollToAnchor="results", current_user=current_user)
+        return render_template("target_weight.html", page_class="index-page", form=form, targets=targets, move=move_descr, onerm=load, liftlvl=lvl, resultsmode="true", scrollToAnchor="results", current_user=current_user)
     return render_template("target_weight.html", page_class="index-page", form=form, resultsmode="", current_user=current_user)
 
 @app.route("/mobile")
