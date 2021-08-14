@@ -208,6 +208,7 @@ def get_pr_journal():
             possible_onerm = lifts[1]['onerm']
             if possible_onerm > logged_onerm:
                 journal[move] = lifts[1]
+                logged_onerm = possible_onerm
     return journal
 
 
