@@ -39,7 +39,7 @@
                         <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                             <div class="card-profile-actions py-4 mt-lg-0">
                                 <a href="/edit_profile" class="btn btn-sm btn-outline-primary mr-4"><i class="fas fa-user-edit"></i> Edit Profile</a>
-                                <a href="/loglift/new/new" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a>
+                                <a href="/loglift/new/new/new" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a>
                             </div>
                         </div>
                         <div class="col-lg-4 order-lg-1">
@@ -85,7 +85,7 @@
                                             <span class="small"> -- </span>
                                         </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;<a href="/loglift/{{liftnumbers[name]}}/new"><i class="far fa-plus-square"></i></a>&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;<a href="/loglift/{{liftnumbers[name]}}/new/new"><i class="far fa-plus-square"></i></a>&nbsp;&nbsp;&nbsp;
                                         </td>
                                         {% else %}
                                         <td>
@@ -152,10 +152,10 @@
                                                                     {% endfor %}
                                                                 </table>
                                                                 <span>
-                                                                    <br><a href="/loglift/{{liftnumbers[name]}}/new" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
+                                                                    <br><a href="/loglift/{{liftnumbers[name]}}/new/new" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
                                                                 </span>
                                                                 <span>
-                                                                    {% else %} No lifts logged for {{ name }} <a href="/loglift/{{liftnumbers[name]}}/new" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a> {%endif%}
+                                                                    {% else %} No lifts logged for {{ name }} <a href="/loglift/{{liftnumbers[name]}}/new/new" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a> {%endif%}
                                                                 </span>
                                                             </div>
                                                         </div>

@@ -309,10 +309,22 @@ def profile():
 
 
 # WODBRAIN LOG LIFT INTERACTIONS
-@app.route("/loglift/<lift_id>/<wt>", methods=["GET","POST"])
-def loglift(lift_id, wt):
+@app.route("/loglift/<lift_id>/<wt>/<reps>", methods=["GET","POST"])
+def loglift(lift_id, wt, reps):
 # Load correct form based on where the user is being directed from
-    if lift_id == "new" and wt == "new":
+
+
+# Double check all of the routing options are covered, I kind of half assed this.
+
+
+    if reps != "new":
+        logform = LogLiftForm(
+            movement = str(lift_id),
+            rep = str(reps),
+            load = str(wt),
+            date = datetime.date.today()
+        )
+    elif lift_id == "new" and wt == "new":
         logform = LogLiftForm(
             date = datetime.date.today()
         )
@@ -458,7 +470,7 @@ def wodweight(lift_id, wt):
         wod_weight = one_rm * rep_reduction_factor
         lift = int(wod_weight - wod_weight % 5)
         liftstring = f"For a 1RM of {one_rm}#, the recommended weight is no more than {lift}# for {wod_reps} reps."
-        return render_template("wodweight.html", page_class="index-page", liftstring=liftstring, rep=wod_reps, lift=lift, form=wodform, scrollToAnchor="results", current_user=current_user)
+        return render_template("wodweight.html", page_class="index-page", liftstring=liftstring, rep=wod_reps, lift=lift, form=wodform, lid = lift_id, scrollToAnchor="results", current_user=current_user)
     return render_template("wodweight.html", page_class="index-page", form=wodform, lifstring="", current_user=current_user)
 
 @app.route("/onerme", methods=["GET","POST"])

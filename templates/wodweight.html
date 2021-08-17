@@ -47,6 +47,10 @@
                 <div class="col-sm">
                     <p></p>
                     <p>{{ liftstring }}</p>
+                    <p>Log your lift with the below button. Don't worry, you'll be able to change the details on the next screen.</p>
+                    <a href="/loglift/{{ lid }}/{{ lift }}/{{ rep }}" class="btn btn-secondary btn-icon mb-3 mb-sm-0">
+                        <span class="btn-inner--text"><i class="far fa-plus-square"></i> Log Lift</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -66,7 +70,7 @@
                     </div>
                     <div class="modal-body">
                         <p>{{liftstring}}</p>
-                        <p>If doing more than one round at {{rep}} reps for a Metcon, consider going around 10 pounds lighter!</p>
+                        <p>If doing more than one round at {{rep}} reps for a Metcon, consider going around 10 pounds lighter.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
