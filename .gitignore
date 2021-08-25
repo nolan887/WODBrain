@@ -1,5 +1,7 @@
 # WODBrain Files
 client_secret.json
+venv
+config.py
 
 # Logs
 logs
