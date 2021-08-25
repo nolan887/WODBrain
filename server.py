@@ -1,12 +1,12 @@
 # GENERAL IMPORTS
 import os
 import pathlib
-from re import A
 import requests
 import datetime
 from wtforms.fields.core import BooleanField
 
 # WODBRAIN IMPORTS
+from config import APP_KEY, DB_URL
 from lift_tables import rep_reduction, age_reduction, lift_tgt_dict, lift_dict_map
 from forms import WODWeightForm, oneRMEForm, TargetWeightForm, LifterProfileForm, LogLiftForm
 
@@ -24,7 +24,7 @@ import google.auth.transport.requests
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'supersecretkey'
+app.config['SECRET_KEY'] = APP_KEY
 Bootstrap(app)
 
 login_manager = LoginManager()
@@ -35,7 +35,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 # CREATE DATABASE
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///wodbrain-database.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -60,7 +60,7 @@ class MovementCatalog(db.Model):
 class LiftData(db.Model):
     __tablename__ = "lift-log"
     wodbrainlift = db.Column(db.Integer, primary_key=True)
-    userid = db.Column(db.String(2))
+    userid = db.Column(db.String(25))
     liftid = db.Column(db.String(2))
     load = db.Column(db.Integer)
     reps = db.Column(db.Integer)
