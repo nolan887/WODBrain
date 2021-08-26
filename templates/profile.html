@@ -85,7 +85,7 @@
                                             <span class="small"> -- </span>
                                         </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;<a href="/loglift/{{liftnumbers[name]}}/new/new"><i class="far fa-plus-square"></i></a>&nbsp;&nbsp;&nbsp;
+                                            <a href="/loglift/{{liftnumbers[name]}}/new/new"><i class="far fa-plus-square"></i></a>
                                         </td>
                                         {% else %}
                                         <td>
@@ -96,8 +96,8 @@
                                             <span class="small"> Level {{ pr_journal[name]['level'] }} </span>
                                         </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;<a href="/targets/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}/{{ pr_journal[name]['level'] }}"><i class="fas fa-bullseye"></i></a> &nbsp;&nbsp;&nbsp;
-                                            <a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator"></i> </a>&nbsp;&nbsp;&nbsp;
+                                            <a href="/targets/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}/{{ pr_journal[name]['level'] }}"><i class="fas fa-bullseye"></i></a>
+                                            <br><a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator"></i> </a>
                                         </td>
                                         {% endif %}
                                     </tr>
@@ -146,16 +146,18 @@
                                                                             <span class="small">{{ liftdata[name][entry]['date'] }}</span>
                                                                         </td>
                                                                         <td>
-                                                                            &nbsp;&nbsp;&nbsp; <a href="/editlift/{{entry}}"><i class="far fa-edit"></i></a> &nbsp;&nbsp;&nbsp; <a href="/deletelift/{{entry}}"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;&nbsp;
+                                                                            <a href="/editlift/{{entry}}"><i class="far fa-edit"></i></a> &nbsp;&nbsp; <a href="/deletelift/{{entry}}"><i class="far fa-trash-alt"></i></a>
                                                                         </td>
                                                                     </tr>
                                                                     {% endfor %}
                                                                 </table>
                                                                 <span>
-                                                                    <br><a href="/loglift/{{liftnumbers[name]}}/new/new" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
+                                                                    {% else %}
+                                                                    No lifts logged for {{ name }}
+                                                                    {%endif%}
                                                                 </span>
                                                                 <span>
-                                                                    {% else %} No lifts logged for {{ name }} <a href="/loglift/{{liftnumbers[name]}}/new/new" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a> {%endif%}
+                                                                    <br><a href="/loglift/{{liftnumbers[name]}}/new/new" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
                                                                 </span>
                                                             </div>
                                                         </div>
