@@ -1,7 +1,8 @@
 # WODBrain Files
+config.py
+gsheet_credentials.json
 client_secret.json
 venv
-config.py
 
 # Logs
 logs

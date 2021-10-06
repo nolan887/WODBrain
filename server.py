@@ -6,7 +6,7 @@ import datetime
 from wtforms.fields.core import BooleanField
 
 # WODBRAIN IMPORTS
-from config import APP_KEY, DB_URL
+from config import APP_KEY, DB_URL, GSHEET_KEY, GCLIENT_ID, WODB_REDIRECT
 from lift_tables import rep_reduction, age_reduction, lift_tgt_dict, lift_dict_map
 from forms import WODWeightForm, oneRMEForm, TargetWeightForm, LifterProfileForm, LogLiftForm
 
@@ -22,6 +22,8 @@ from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
 
+# GOOGLE SHEET IMPORTS
+import gspread
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = APP_KEY
@@ -76,14 +78,19 @@ db.create_all()
 # Allows Google to pass info to local test environment
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-GOOGLE_CLIENT_ID = "246309898653-gh1r54ma97fjhc5eihbsijoaobk42fco.apps.googleusercontent.com"
+GOOGLE_CLIENT_ID = GCLIENT_ID
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
 
 flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes = ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri="http://127.0.0.1:5000/callback"
+    redirect_uri=WODB_REDIRECT
     )
+
+# GOOGLE SHEET SETUP
+gc = gspread.service_account(filename="gsheet_credentials.json")
+sh = gc.open_by_key(GSHEET_KEY)
+worksheet = sh.sheet1
 
 def login_is_required(function):
     def wrapper(*args, **kwargs):
@@ -211,6 +218,12 @@ def get_pr_journal():
                 logged_onerm = possible_onerm
     return journal
 
+def mailchimp_gsheet(id, name, fname, lname, email):
+    chimp_list = worksheet.col_values(1) #all Column 1 User ID Values from MailChimp GSheet
+    if id not in chimp_list:
+        user = [id, name, fname, lname, email]
+        worksheet.append_row(user)
+    return
 
 # WODBRAIN LOGIN HANDLING
 @app.route("/login")
@@ -242,6 +255,8 @@ def callback():
     session["google_id"] = id_info.get("sub")
     session["google_email"] = id_info.get("email")
     session["name"] = id_info.get("name")
+    session["first_name"] = id_info.get("given_name")
+    session["last_name"] = id_info.get("family_name")
 
     if User.query.filter_by(id=session["google_id"]).first():
         # IN DATABASE
@@ -250,11 +265,23 @@ def callback():
         login_user(existing_user)
         return redirect("/mobile")
     else:
-        # NOT IN DATABASE
+        # NOT IN DATABASE / NEW USER
         new_id = str(session["google_id"])
         new_email = str(session["google_email"])
         new_name = str(session["name"])
+        new_fname = str(session["first_name"])
+        new_lname = str(session["last_name"])
 
+        # ADD USER TO MAILCHIP USER GROUP GOOGLE SHEET
+        mailchimp_gsheet(
+            id = new_id,
+            name = new_name, 
+            fname = new_fname,
+            lname = new_lname,
+            mail = new_email
+            )
+
+        # CREATE NEW SQL USER
         new_user = User(
             id = new_id,
             email = new_email,
@@ -312,8 +339,6 @@ def profile():
 @app.route("/loglift/<lift_id>/<wt>/<reps>", methods=["GET","POST"])
 def loglift(lift_id, wt, reps):
 # Load correct form based on where the user is being directed from
-
-
 # Double check all of the routing options are covered, I kind of half assed this.
 
 
@@ -507,7 +532,7 @@ def targets(lift_id, load, lvl):
 
         # Pass in movement name
         move_descr = str(db.session.query(MovementCatalog.move).filter_by(id=tw_mvmt).first()).strip(")(,'")
-        return render_template("target_weight.html", page_class="index-page", form=form, targets=targets, move=move_descr, onerm=load, liftlvl=lvl, resultsmode="true", scrollToAnchor="results", current_user=current_user)
+        return render_template("target_weight.html", page_class="index-page", form=form, targets=targets, move=move_descr, onerm=load, liftlvl=lvl, resultsmode="true", scrollToAnchor="results", current_user=current_user, liftnumbers=lift_dict_map)
     return render_template("target_weight.html", page_class="index-page", form=form, resultsmode="", current_user=current_user)
 
 @app.route("/mobile")

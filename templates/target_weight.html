@@ -122,6 +122,10 @@
                                 <span class="btn btn-white btn-icon mb-3 mb-sm-0" data-toggle="modal" data-target="#modal-level-dfn">
                                     <span class="btn-inner--text">Define Levels</span>
                                 </span>
+                                {% if current_user.is_authenticated %} &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="/loglift/{{liftnumbers[move]}}/new/new"><span class="btn btn-white btn-icon mb-3 mb-sm-0">
+                                    <span class="btn-inner--text">Log Lift</span>
+                                </span></a> {% endif %}
                             </th>
                         </tr>
                     </table>
@@ -246,6 +250,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
+
                     </div>
                 </div>
             </div>
