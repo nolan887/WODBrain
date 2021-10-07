@@ -47,10 +47,12 @@
                 <div class="col-sm">
                     <p></p>
                     <p>{{ liftstring }}</p>
+                    {% if current_user.is_authenticated %}
                     <p>Log your lift with the below button. Don't worry, you'll be able to change the details on the next screen.</p>
                     <a href="/loglift/{{ lid }}/{{ lift }}/{{ rep }}" class="btn btn-secondary btn-icon mb-3 mb-sm-0">
                         <span class="btn-inner--text"><i class="far fa-plus-square"></i> Log Lift</span>
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

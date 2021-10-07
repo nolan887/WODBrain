@@ -506,7 +506,7 @@ def onerme():
         load=one_rme_form.multirepload.data
         onerme = one_rm_calc(rep=rep , load=load)
         onermestring = f"Lifting {load}# for {rep} repetitions is equivalent to a one rep lift of {onerme}#."
-        return render_template("1rme.html", page_class="index-page", onermestring=onermestring, onerme=onerme, form=one_rme_form, scrollToAnchor="results", current_user=current_user)
+        return render_template("1rme.html", page_class="index-page", onermestring=onermestring, load=load, rep=rep, onerme=onerme, form=one_rme_form, scrollToAnchor="results", current_user=current_user, liftnumbers=lift_dict_map)
     return render_template("1rme.html", page_class="index-page", form=one_rme_form, onermestring="", current_user=current_user)
 
 @app.route("/targets/<lift_id>/<load>/<lvl>", methods=["GET","POST"])

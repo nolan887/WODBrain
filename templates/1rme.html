@@ -48,6 +48,12 @@
                     <p></p>
                     <p>{{ onermestring }}</p>
                 </div>
+                {% if current_user.is_authenticated %}
+                <a href="/loglift/new/{{load}}/{{rep}}">
+                    <span class="btn btn-white btn-icon mb-3 mb-sm-0">
+                            <span class="btn-inner--text"><i class="far fa-plus-square"></i> Log Lift</span>
+                    </span>
+                </a> {% endif %}
             </div>
         </div>
     </div>
