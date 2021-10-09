@@ -278,7 +278,7 @@ def callback():
             name = new_name, 
             fname = new_fname,
             lname = new_lname,
-            mail = new_email
+            email = new_email
             )
 
         # CREATE NEW SQL USER
