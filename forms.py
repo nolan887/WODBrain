@@ -17,14 +17,14 @@ class oneRMEForm(FlaskForm):
     submit = SubmitField("Calculate 1RME")
 
 class LifterProfileForm(FlaskForm):
-    name = StringField("Name")
     sex = RadioField(label="Gender",choices=[('m',"♂ Male"),('f',"♀ Female")])
+    name = StringField("Name")
     age = IntegerField("Age (years)",widget=TelInput())
     bw = FloatField("Body Weight (lb)",widget=TelInput())
     submit = SubmitField("Save Profile")
 
 class TargetWeightForm(FlaskForm):
-    sex = RadioField(label="Gender",choices=[('m',"♂ Male"),('f',"♀ Female")],default='m')
+    sex = RadioField(label='Gender',choices=[('m',"♂ Male"),('f',"♀ Female")],default='m')
     age = IntegerField("Age (years)",widget=TelInput())
     bw = FloatField("Body Weight (lb)",widget=TelInput())
     movement = SelectField(

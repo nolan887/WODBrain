@@ -338,40 +338,23 @@ def profile():
 # WODBRAIN LOG LIFT INTERACTIONS
 @app.route("/loglift/<lift_id>/<wt>/<reps>", methods=["GET","POST"])
 def loglift(lift_id, wt, reps):
-# Load correct form based on where the user is being directed from
-# Double check all of the routing options are covered, I kind of half assed this.
-
-
-    if reps != "new":
+    if reps != "new": # Sent from WodWeight or 1RME will always have reps and load
         logform = LogLiftForm(
-            movement = str(lift_id),
             rep = str(reps),
             load = str(wt),
             date = datetime.date.today()
         )
-    elif lift_id == "new" and wt == "new":
-        logform = LogLiftForm(
-            date = datetime.date.today()
-        )
-    elif lift_id == "new" and wt != "new":
-        logform = LogLiftForm(
-            load = str(wt),
-            date = datetime.date.today()
-        )
-    elif lift_id != "new" and wt == "new":
+    elif lift_id != "new": # Sent from Targets or Profile will always have movement only
         logform = LogLiftForm(
             movement = str(lift_id),
             date = datetime.date.today()
         )
-    elif lift_id != "new" and wt != "new":
+    else: # If no data, always pass in today's date by default
         logform = LogLiftForm(
-            load = str(wt),
-            movement = str(lift_id),
             date = datetime.date.today()
         )
-    else:
-        logform = LogLiftForm()
-# Commit loglift form to SQL if the user is logged in and submits form
+
+    # Commit loglift form to SQL if the user is logged in and submits form
     if current_user.is_authenticated:
         if logform.validate_on_submit():
 
@@ -539,6 +522,9 @@ def targets(lift_id, load, lvl):
 def mobile():
     return render_template("mobile_splash.html", page_class="index-page", current_user=current_user)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
 
 if __name__ == '__main__':
