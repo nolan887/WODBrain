@@ -117,8 +117,8 @@
                                 <div class="accordion-1">
                                     <div class="container">
                                         <div class="row">
-                                            <div class="col-md-12 ml-auto">
-                                                <div class="accordion" id="alllifts">
+                                            <div class="col-md-12 ">
+                                                <div class="accordion" id="alllifts" style="margin: auto;">
                                                     {% for name in liftcatalog: %}
                                                     <div class="card">
                                                         <div class="card-header" id="heading{{liftnumbers[name]}}">
@@ -129,7 +129,7 @@
                                                             </h5>
                                                         </div>
                                                         <div id="data{{liftnumbers[name]}}" class="collapse" aria-labelledby="heading{{liftnumbers[name]}}" data-parent="#alllifts">
-                                                            <div class="card-body opacity-8">
+                                                            <div class="card-body opacity-8" style="padding-left: 0; padding-right: 0;">
                                                                 {% if liftdata[name]: %}
                                                                 <table class="profile-table" style="margin: auto;">
                                                                     <tr>
@@ -156,9 +156,9 @@
                                                                     No lifts logged for {{ name }}
                                                                     {%endif%}
                                                                 </span>
-                                                                <span>
-                                                                    <br><a href="/loglift/{{liftnumbers[name]}}/new/new" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
-                                                                </span>
+                                                                <div class="pt-3">
+                                                                    <a href="/loglift/{{liftnumbers[name]}}/new/new" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
