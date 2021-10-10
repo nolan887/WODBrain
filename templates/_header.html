@@ -48,7 +48,7 @@ Coded by www.creative-tim.com
 <body class={{page_class}}>
     <!-- Navbar -->
     <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg bg-white navbar-light fixed-top shadow py-2">
-        <a class="navbar-brand" href="/">WODBrain</a>
+        <a class="navbar-brand" href="/mobile">WODBrain</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -57,23 +57,26 @@ Coded by www.creative-tim.com
                 <li class="nav-item">
                     <a class="nav-link" href="/mobile"><i class="fas fa-power-off"></i> Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wodweight/new/new"><i class="fas fa-calculator"></i> WOD Weight</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/onerme"><i class="fas fa-crown"></i> 1RM Equivalent</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/targets/00/0/na"><i class="fas fa-bullseye"></i> Target Weight</a>
+                <!-- Tools Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTools" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-brain"></i> Tools
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownTools">
+                        <a class="dropdown-item" href="/wodweight/new/new"><i class="fas fa-calculator"></i> WOD Weight</a>
+                        <a class="dropdown-item" href="/onerme"><i class="fas fa-crown"></i> 1RM Equivalent</a>
+                        <a class="dropdown-item" href="/targets/00/0/na"><i class="fas fa-bullseye"></i> Target Weight</a>
+                        <!-- Show Log Lift if User is Logged In -->
+                        {% if current_user.is_authenticated: %}
+                        <a class="dropdown-item" href="/loglift/new/new/new"><i class="far fa-plus-square"></i> Log Lift</a> {% endif %}
+                    </div>
                 </li>
                 {% if not current_user.is_authenticated: %}
                 <li class="nav-item">
                     <a class="nav-link" href="/login"><i class="fab fa-google"></i> Login</a>
                 </li>
                 {% else: %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/loglift/new/new/new"><i class="far fa-plus-square"></i> Log Lift</a>
-                </li>
+                <!-- Profile Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-id-card"></i> Profile
@@ -86,7 +89,10 @@ Coded by www.creative-tim.com
                 </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/phone"><i class="fab fa-app-store"></i> Download App</a>
+                    <a class="nav-link" href="/phone"><i class="fab fa-app-store"></i> Download</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><i class="fas fa-info"></i> About</a>
                 </li>
             </ul>
         </div>
