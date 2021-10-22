@@ -455,7 +455,11 @@ def deletelift(id):
 # WODBRAIN ROUTING PAGES
 @app.route("/")
 def home():
-    return render_template("index.html", page_class="index-page", current_user=current_user)
+    return render_template("mobile_splash.html", page_class="index-page", current_user=current_user)
+
+@app.route("/about")
+def about():
+    return render_template("about.html", page_class="index-page", current_user=current_user)
 
 @app.route("/phone")
 def phone():
