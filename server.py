@@ -442,6 +442,12 @@ def editlift(id):
         return(render_template("editlift.html", form=editform, page_class="index-page", current_user=current_user))
     return(redirect("/login"))
 
+@app.route("/xlift/<liftid>")
+def xlift(liftid):
+    if current_user.is_authenticated:
+        return render_template("deletelift.html", page_class="index-page", current_user=current_user, liftid=liftid)
+    return redirect("/login")
+
 @app.route("/deletelift/<id>", methods=["GET", "POST"])
 def deletelift(id):
     if current_user.is_authenticated:
