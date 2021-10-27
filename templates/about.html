@@ -24,25 +24,7 @@
                         <div class="col-lg-6 text-center">
                             <img src="{{ url_for('static', filename='img/wodbrain_logo_circ_white.png')}}" style="height: 75px;" class="img-fluid"><span class="lead text-white" style="font-size: 2rem; vertical-align: middle;"> &nbsp;WODBrain</span>
                             <p class="lead text-white">You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
-                            <p>
-                                <a href="/wodweight/new/new" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
-                                    <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
-                                    <span class="btn-inner--text">WOD Weight</span>
-                                </a>
-                            </p>
-                            <p>
-                                <a href="/onerme" class="btn btn-lg btn-dark btn-icon mb-3 mb-sm-0">
-                                    <span class="btn-inner--icon"><i class="fas fa-crown"></i></span>
-                                    <span class="btn-inner--text">1RM Equivalent</span>
-                                </a>
-                            </p>
-                            <p>
-                                <a href="/targets/00/0/na" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
-                                    <span class="btn-inner--icon"><i class="fas fa-bullseye"></i></span>
-                                    <span class="btn-inner--text">Target Weight</span>
-                                </a>
-                            </p>
-                            <div class="mt-5">
+                            <div class="">
                                 <small class="font-weight-bold mb-0 mr-2 text-white">created by: Charlie Nolan at <a href="https://www.cloudbrk.io">Cloudbreak</a></small>
                             </div>
                         </div>
@@ -117,12 +99,10 @@
                 <div class="col-lg-12" id="WODWeight">
                     <h2>Target Weight</h2>
                     <div class="col-sm">
-                        <!-- TODO: UPDATE THIS SECTION -->
                         <p>What’s your bench bro? Seriously though, how much should you be able to lift? Target Weight has been developed to answer this exact question. Each person is built differently and there are many different factors that go into how
                             much you can lift.</p>
                         <p>The Target Weight tool takes your sex, body weight, and age and compares to other lifters of similar sex, body type, and age. The database of logged lifts has over one million entries, so the targets have been well established.</p>
                         <p>Simply input the barbell movement you’re looking to benchmark, enter your personal info, and you will get five levels of targets ranging from Beginner to Elite.</p>
-                        <!-- END TODO -->
                         <p>What are you waiting for? Let's get started!</p>
                         <a href="/targets">
                             <button type="button" class="btn btn-default">
@@ -140,23 +120,49 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
-                    <h2 class="text-secondary">Change Log</h2>
-                    <h6 class="text-secondary">ver 1.0 (2021-May-03)</h6>
-                    <p>&nbsp;&nbsp;&nbsp;Initial release. <a class="text-secondary" href="/wodweight">WOD Weight</a> functionality added.</p>
-                    <h6 class="text-secondary">ver 1.1 (2021-May-14)</h6>
-                    <p>&nbsp;&nbsp;&nbsp;Relocated app to self-hosted server.</p>
-                    <h6 class="text-secondary">ver 2.0 (2021-May-25)</h6>
-                    <p>&nbsp;&nbsp;&nbsp;Feature release. <a class="text-secondary" href="/onerme">1RME</a> functionality added.</p>
-                    <h6 class="text-secondary">ver 2.1 (2021-May-27)</h6>
-                    <p>&nbsp;&nbsp;&nbsp;Added new home screen for mobile app use.</p>
-                    <!-- TODO: INCLUDE 3.0 LAUNCH NOTES -->
-                    <h6 class="text-secondary">ver 3.0 (2021-June-30)</h6>
-                    <p>&nbsp;&nbsp;&nbsp;Moved app hosting to its final location:
-                        <a class="text-secondary" href="https://www.wodbrain.app">www.wodbrain.app</a>
+                    <h2 class="text-secondary">Profiles, Logging Lifts, Blog</h2>
+                    <div class="col-sm mb-5">
+                        <h3 class="text-secondary">User Profile</h3>
+                        <p>
+                            User profile creation and login is handled through your Google account. Information for your user profile will be used to power each of the WODBrain tools and establish a private folder to store your lift and personal record data. Google is used for enhanced
+                            security, their international team of engineers are much better suited to handle passwords and personal details than we are!
+                        </p>
+                        <h3 class="text-secondary">Logging Lifts</h3>
+                        <p>
+                            With an account created, the real functionality of WODBrain can really shine. From each of the tools you will have the ability to log a lift. Once a lift is logged, your 1RME (one rep max equivalent) will be calculated. With this 1RME, the WODBrain engine
+                            will be able to recommend the most accurate weight for you based on movement and/or repetitions in a WOD. WODBrain will also be able to determine if a lift completed is a new PR based on the calculated 1RME. You can still set
+                            PR's even without going for a heavy single!</p>
+                        <h3 class="text-secondary">Blog</h3>
+                        <p>
+                            A blog was created to walk new users through the entire WODBrain process from downloading, setting up a profile, and how each of the tools work. The link to the blog will be automatically e-mailed each user the first time they sign in with a new account!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include "_greyskew.html" %}
+    </div>
+    <div class="section section-components pb-4 bg-secondary">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <h2>Change Log</h2>
+                    <h6>ver 1.0 (2021-May-03)</h6>
+                    <p style="padding-left: 1rem;">Initial release. <a href="/wodweight">WOD Weight</a> functionality added.</p>
+                    <h6>ver 1.1 (2021-May-14)</h6>
+                    <p style="padding-left: 1rem;">Relocated app to self-hosted server.</p>
+                    <h6>ver 2.0 (2021-May-25)</h6>
+                    <p style="padding-left: 1rem;">Feature release. <a href="/onerme">1RME</a> functionality added.</p>
+                    <h6>ver 2.1 (2021-May-27)</h6>
+                    <p style="padding-left: 1rem;">Added new home screen for mobile app use.</p>
+                    <h6>ver 3.0 (2021-June-30)</h6>
+                    <p style="padding-left: 1rem;">
+                        Moved app hosting to its final location: <a href="https://www.wodbrain.app">www.wodbrain.app</a>
+                        <br>Feature release. <a href="/targets">Target Weight</a> functionality added.
+                        <br>Updated <a href="/mobile">mobile home screen</a>
                     </p>
-                    <p>&nbsp;&nbsp;&nbsp;Feature release. <a class="text-secondary" href="/targets">Target Weight</a> functionality added.</p>
-                    <p>&nbsp;&nbsp;&nbsp;Updated <a class="text-secondary" href="/mobile">mobile home screen</a></p>
-                    <!-- END TODO -->
+                    <h6>ver 4.0 (2021-October-28)</h6>
+                    <p style="padding-left: 1rem;">Implemented user profiles including the ability to log lifts, view all logged lifts, and quickly and easily view 1RME for all movements. Additional implementation to log lifts from each of the WODBrain tool screens.</p>
                 </div>
             </div>
         </div>

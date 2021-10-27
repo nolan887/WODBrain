@@ -18815,7 +18815,7 @@ textarea[resize="horizontal"] {
 
 @media (min-width: 768px) {
     .section-hero {
-        min-height: 500px;
+        min-height: 250px;
     }
 }
 
