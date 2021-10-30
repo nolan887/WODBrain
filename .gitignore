@@ -3,6 +3,7 @@ config.py
 gsheet_credentials.json
 client_secret.json
 venv
+wodbrain-database.db
 
 # Logs
 logs
