@@ -386,10 +386,8 @@ def loglift(lift_id, wt, reps,liftlogged):
             )
             db.session.add(new_lift)
             db.session.commit()
-            # return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="yes"))
             return(redirect("/loglift/new/new/new/yes"))
         else:
-            # return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
             return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged=liftlogged))
     return(redirect("/login"))
 
