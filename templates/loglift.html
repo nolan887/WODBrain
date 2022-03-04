@@ -1,51 +1,44 @@
 {% include "_header.html" %} {% include "_analytics.html" %} {% import "bootstrap/wtf.html" as wtf %}
-<div class="section section-components section-shaped pb-10 " style="color: #f4f5f7;">
-    <div class="shape shape-style-1 shape-primary">
-        <span class="span-150"></span>
-        <span class="span-50"></span>
-        <span class="span-50"></span>
-        <span class="span-75"></span>
-        <span class="span-100"></span>
-        <span class="span-75"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-    </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <h2 style="color: #f4f5f7;"><img src="{{ url_for('static', filename='img/wodbrain_logo_circ_white.png')}}" style="height: 75px;" class="img-fluid"> &nbsp;Log Lift</h2>
-                <div class="col-sm pt-2">
-                    <p> Use the fields below to save a lift to your lifter profile.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% include "_greyskew.html" %}
-</div>
-<div class="section section-components pb-100 bg-secondary">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12" id="calc">
-                <h2>Log Lift </h2>
-                {% if liftlogged == "yes" %}
-                <!--SUCCESS ALERT-->
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-inner--text"><strong>Success!</strong> The lift has been saved to your <a href="/profile" style="text-decoration: underline;" class="text-secondary">lifter profile</a>.</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                {% endif %}
-                <div class="col-sm">
-                    {{ wtf.quick_form(form, novalidate=True) }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+<main class="page shell">
+    <!-- Title Block -->
+    <div class="boxy shell shdw ">
+        <img src="{{ url_for('static', filename='img/wodbrain_logo_circ_black.png')}}" style="height: 3rem;" class="img-fluid">
+        <span class="lgfont">
+            &nbsp; Log Lift
+        </span>
+        <hr>
+        <p>
+            Lifts logged here will save to your user profile. You can edit or delete these lifts from your profile page.
+        </p>
+    </div>
+    <!-- Log Lift Form -->
+    <div class="boxy shell shdw">
+        {{ wtf.quick_form(form, novalidate=True) }}
+    </div>
+    <!-- Successfully Logged Check -->
+    {% if liftlogged == "yes" %}
+    <!-- Success Logged Modal -->
+    <div class="modal fade bg-blur" id="modal-logged" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content egplnt">
+                <div class="modal-header">
+                    <h6 class="modal-title txtlt" id="modal-title-default">Success!</h6>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">The lift has been successfully saved to your lifter profile. You can view, edit, and delete all of your lifts from your user lifter screen.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-sand ml-auto shdw" data-dismiss="modal"><i class="far fa-plus-square mr-2"></i> Log Lift</button>
+                    <a href="/profile" class="btn btn-sand btn-icon shdw">
+                        <span class="btn-inner--text"><i class="far fa-address-card mr-2"></i> Profile</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</main>
 
 {% include "_footer.html" %}

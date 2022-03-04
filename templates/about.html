@@ -1,172 +1,134 @@
  {% include "_header.html" %}{% include "_analytics.html" %}
 
-<div class="wrapper">
-    <!--    Start of "Hero" Section-->
-    <div class="section section-hero section-shaped">
-        <!--      White Bubbles-->
-        <div class="shape shape-style-1 shape-primary">
-            <span class="span-150"></span>
-            <span class="span-50"></span>
-            <span class="span-50"></span>
-            <span class="span-75"></span>
-            <span class="span-100"></span>
-            <span class="span-75"></span>
-            <span class="span-50"></span>
-            <span class="span-100"></span>
-            <span class="span-50"></span>
-            <span class="span-100"></span>
-        </div>
-        <!--      End Bubbles-->
-        <div class="page-header">
-            <div class="container shape-container d-flex align-items-center py-md">
-                <div class="col px-0">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-lg-6 text-center">
-                            <img src="{{ url_for('static', filename='img/wodbrain_logo_circ_white.png')}}" style="height: 75px;" class="img-fluid"><span class="lead text-white" style="font-size: 2rem; vertical-align: middle;"> &nbsp;WODBrain</span>
-                            <p class="lead text-white">You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
-                            <div class="">
-                                <small class="font-weight-bold mb-0 mr-2 text-white">created by: Charlie Nolan at <a href="https://www.cloudbrk.io">Cloudbreak</a></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% include "_greyskew.html" %}
+<main class="page shell">
+    <!-- Title Block -->
+    <div class="boxy shell shdw ">
+        <img src="{{ url_for('static', filename='img/wodbrain_logo_circ_black.png')}}" style="height: 3rem;" class="img-fluid"><span class="lgfont">&nbsp;About</span>
+        <hr>
+        <p class="cntr mb-0">You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
     </div>
-    <!--    End of "Hero" Section-->
-
-    <!--    Section with Grey Background and Purple Text-->
-    <div class="section section-components bg-secondary">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12" id="WODWeight">
-                    <h2>WOD Weight</h2>
-                    <div class="col-sm">
-                        <p>Sick and tired of guessing at a WOD weight between scaled and Rx? Trying to get stronger but you don’t know how much is too much? WODBrain is the tool you’ve never know you always wanted!</p>
-                        <p>The gym whiteboard and your personal notes app show one thing, your one rep max (1RM) so you can show yourself how jacked you’ve become.</p>
-                        <p>Using this number and the target number of unbroken repetitions for your WOD, WODBrain will dial in exactly what weight you can handle.Our recommendation engine will give you the maximum weight recommended for your rep scheme.</p>
-                        <h3>Example</h3>
-                        <p>The WOD is Diane: 21-15-9 Deadlift (225/155) + Handstand Push-Ups, but your 1RM deadlift is only 200#. OH NO!</p>
-                        <p>From here let’s devise a strategy to break 3 times max for each round. This means the maximum broken reps you are doing for this WOD is 7. Using 250# and 7 reps, WODBrain will calculate that you to should go no heavier than 165#
-                            for 7 unbroken reps.</p>
-                        <p>What are you waiting for? Let's get started!</p>
-                        <a href="/wodweight">
-                            <button type="button" class="btn btn-default">
+    <!-- WOD Weight Block -->
+    <div class="boxy shell shdw" id="WODWeight">
+        <span class="lgfont">WOD Weight</span>
+        <hr>
+        <p>Sick and tired of guessing at a WOD weight between scaled and Rx? Trying to get stronger but you don’t know how much is too much? WODBrain is the tool you’ve never know you always wanted!</p>
+        <p>The gym whiteboard and your personal notes app show one thing, your one rep max (1RM) so you can show yourself how jacked you’ve become.</p>
+        <p>Using this number and the target number of unbroken repetitions for your WOD, WODBrain will dial in exactly what weight you can handle.Our recommendation engine will give you the maximum weight recommended for your rep scheme.</p>
+        <h5>Example</h5>
+        <p>The WOD is Diane: 21-15-9 Deadlift (225/155) + Handstand Push-Ups, but your 1RM deadlift is only 200#. OH NO!</p>
+        <p>From here let’s devise a strategy to break 3 times max for each round. This means the maximum broken reps you are doing for this WOD is 7. Using 250# and 7 reps, WODBrain will calculate that you to should go no heavier than 165# for 7 unbroken
+            reps.
+        </p>
+        <p>What are you waiting for? Let's get started!</p>
+        <div class="cntr">
+            <a href="/wodweight/new/new">
+                <button type="button" class="btn btn-default">
                                 <span class="btn-inner--icon"><i class="fas fa-calculator"></i></span>
-                                <span class="btn-inner--text">WOD Weight</span>
+                                <span class="btn-inner--text"> &nbsp; WOD Weight</span>
                             </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% include "_purpleskew.html" %}
-    </div>
-    <div class="section section-components bg-primary text-secondary ">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12" id="1RME">
-                    <h2 class="text-secondary">1RM Equivalent</h2>
-                    <div class="col-sm">
-                        <p>Unfortunately, not every day at the gym is build to a heavy single. Depending on your programming, there can be periodic strength sessions sprinkled in, but without checking your 1RM against itself it can be hard to determine just
-                            how much stronger you are getting.</p>
-                        <p>Enter 1RME! Regardless of the reps and load, this calculator will convert what you've lifted to the equivalent one rep maximum. Instead of scratching your head thinking "close enough" you can now compare apples to apples using
-                            1RME.
-                        </p>
-                        <h3 class="text-secondary">Example</h3>
-                        <p>It's been months since you've maxed out your front squat during a pure strength session. This WOD you've got a shorter metcon for your Part B and Part A is building 5x5 front squat to get your form dialed in and get the blood pumping
-                            a bit before the Metcon.</p>
-                        <p>Your last set of five was feeling pretty good and ended at 210#, you keep the part about thinking you were going to be stuck in the hole forever to yourself as you fist bump your classmates. Your established 1RM is 220#, so it
-                            seems like you were pretty close. </p>
-                        <p>Using the 1RME calculator, you'll be very pumped when you see that the equivalent 1RM for 5 reps at 210# is actually 235#! Congrats on the new PR!</p>
-                        <p>What are you waiting for? Let's get started!</p>
-                        <a href="/onerme">
-                            <button type="button" class="btn btn-white text-primary">
-                                <span class="btn-inner--icon"><i class="fas fa-crown"></i></span>
-                                <span class="btn-inner--text">1RM Equivalent</span>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% include "_greyskew.html" %}
+            </a>
         </div>
     </div>
-    <div class="section section-components bg-secondary">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12" id="WODWeight">
-                    <h2>Target Weight</h2>
-                    <div class="col-sm">
-                        <p>What’s your bench bro? Seriously though, how much should you be able to lift? Target Weight has been developed to answer this exact question. Each person is built differently and there are many different factors that go into how
-                            much you can lift.</p>
-                        <p>The Target Weight tool takes your sex, body weight, and age and compares to other lifters of similar sex, body type, and age. The database of logged lifts has over one million entries, so the targets have been well established.</p>
-                        <p>Simply input the barbell movement you’re looking to benchmark, enter your personal info, and you will get five levels of targets ranging from Beginner to Elite.</p>
-                        <p>What are you waiting for? Let's get started!</p>
-                        <a href="/targets">
-                            <button type="button" class="btn btn-default">
-                                <span class="btn-inner--icon"><i class="fas fa-bullseye"></i></span>
-                                <span class="btn-inner--text">Target Weight</span>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% include "_purpleskew.html" %}
-    </div>
-    <div class="section section-components pb-4 bg-primary text-secondary">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <h2 class="text-secondary">Profiles, Logging Lifts, Blog</h2>
-                    <div class="col-sm mb-5">
-                        <h3 class="text-secondary">User Profile</h3>
-                        <p>
-                            User profile creation and login is handled through your Google account. Information for your user profile will be used to power each of the WODBrain tools and establish a private folder to store your lift and personal record data. Google is used for enhanced
-                            security, their international team of engineers are much better suited to handle passwords and personal details than we are!
-                        </p>
-                        <h3 class="text-secondary">Logging Lifts</h3>
-                        <p>
-                            With an account created, the real functionality of WODBrain can really shine. From each of the tools you will have the ability to log a lift. Once a lift is logged, your 1RME (one rep max equivalent) will be calculated. With this 1RME, the WODBrain engine
-                            will be able to recommend the most accurate weight for you based on movement and/or repetitions in a WOD. WODBrain will also be able to determine if a lift completed is a new PR based on the calculated 1RME. You can still set
-                            PR's even without going for a heavy single!</p>
-                        <h3 class="text-secondary">Blog</h3>
-                        <p>
-                            A blog was created to walk new users through the entire WODBrain process from downloading, setting up a profile, and how each of the tools work. The link to the blog will be automatically e-mailed each user the first time they sign in with a new account!
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% include "_greyskew.html" %}
-    </div>
-    <div class="section section-components pb-4 bg-secondary">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <h2>Change Log</h2>
-                    <h6>ver 1.0 (2021-May-03)</h6>
-                    <p style="padding-left: 1rem;">Initial release. <a href="/wodweight">WOD Weight</a> functionality added.</p>
-                    <h6>ver 1.1 (2021-May-14)</h6>
-                    <p style="padding-left: 1rem;">Relocated app to self-hosted server.</p>
-                    <h6>ver 2.0 (2021-May-25)</h6>
-                    <p style="padding-left: 1rem;">Feature release. <a href="/onerme">1RME</a> functionality added.</p>
-                    <h6>ver 2.1 (2021-May-27)</h6>
-                    <p style="padding-left: 1rem;">Added new home screen for mobile app use.</p>
-                    <h6>ver 3.0 (2021-June-30)</h6>
-                    <p style="padding-left: 1rem;">
-                        Moved app hosting to its final location: <a href="https://www.wodbrain.app">www.wodbrain.app</a>
-                        <br>Feature release. <a href="/targets">Target Weight</a> functionality added.
-                        <br>Updated <a href="/mobile">mobile home screen</a>
-                    </p>
-                    <h6>ver 4.0 (2021-October-28)</h6>
-                    <p style="padding-left: 1rem;">Implemented user profiles including the ability to log lifts, view all logged lifts, and quickly and easily view 1RME for all movements. Additional implementation to log lifts from each of the WODBrain tool screens.</p>
-                </div>
-            </div>
+    <!-- 1RME Block -->
+    <div class="boxy shell shdw" id="1RME">
+        <span class="lgfont">1RM Equivalent</span>
+        <hr>
+        <p>Unfortunately, not every day at the gym is build to a heavy single. Depending on your programming, there can be periodic strength sessions sprinkled in, but without checking your 1RM against itself it can be hard to determine just how much stronger
+            you are getting.</p>
+        <p>Enter 1RME! Regardless of the reps and load, this calculator will convert what you've lifted to the equivalent one rep maximum. Instead of scratching your head thinking "close enough" you can now compare apples to apples using 1RME.
+        </p>
+        <h5>Example</h5>
+        <p>It's been months since you've maxed out your front squat during a pure strength session. This WOD you've got a shorter metcon for your Part B and Part A is building 5x5 front squat to get your form dialed in and get the blood pumping a bit before
+            the Metcon.</p>
+        <p>Your last set of five was feeling pretty good and ended at 210#, you keep the part about thinking you were going to be stuck in the hole forever to yourself as you fist bump your classmates. Your established 1RM is 220#, so it seems like you were
+            pretty close. </p>
+        <p>Using the 1RME calculator, you'll be very pumped when you see that the equivalent 1RM for 5 reps at 210# is actually 235#! Congrats on the new PR!</p>
+        <p>What are you waiting for? Let's get started!</p>
+        <div class="cntr">
+            <a href="/onerme">
+                <button type="button" class="btn btn-default">
+                <span class="btn-inner--icon"><i class="fas fa-crown"></i></span>
+                <span class="btn-inner--text">1RM Equivalent</span>
+            </button>
+            </a>
         </div>
     </div>
-</div>
+    <!-- Target Weight Block -->
+    <div class="boxy shell shdw" id="TargetWeight">
+        <span class="lgfont">Target Weight</span>
+        <hr>
+        <p>What’s your bench bro? Seriously though, how much should you be able to lift? Target Weight has been developed to answer this exact question. Each person is built differently and there are many different factors that go into how much you can lift.</p>
+        <p>The Target Weight tool takes your sex, body weight, and age and compares to other lifters of similar sex, body type, and age. The database of logged lifts has over one million entries, so the targets have been well established.</p>
+        <p>Simply input the barbell movement you’re looking to benchmark, enter your personal info, and you will get five levels of targets ranging from Beginner to Elite.</p>
+        <p>What are you waiting for? Let's get started!</p>
+        <div class="cntr">
+            <a href="/targets/00/0/na">
+                <button type="button" class="btn btn-default">
+                <span class="btn-inner--icon"><i class="fas fa-bullseye"></i></span>
+                <span class="btn-inner--text"> &nbsp; Target Weight</span>
+            </button>
+            </a>
+        </div>
+    </div>
+    <!-- Profile Block -->
+    <div class="boxy shell shdw" id="ProfilesETC">
+        <span class="lgfont">Profile, Logging, Blog</span>
+        <hr>
+        <h5>User Profile</h5>
+        <p>
+            User profile creation and login is handled through your Google account. Information for your user profile will be used to power each of the WODBrain tools and establish a private folder to store your lift and personal record data. Google is used for enhanced
+            security, their international team of engineers are much better suited to handle passwords and personal details than we are!
+        </p>
+        <h5>Logging Lifts</h5>
+        <p>
+            With an account created, the real functionality of WODBrain can really shine. From each of the tools you will have the ability to log a lift. Once a lift is logged, your 1RME (one rep max equivalent) will be calculated. With this 1RME, the WODBrain engine
+            will be able to recommend the most accurate weight for you based on movement and/or repetitions in a WOD. WODBrain will also be able to determine if a lift completed is a new PR based on the calculated 1RME. You can still set PR's even without
+            going for a heavy single!</p>
+        <h5>Blog</h5>
+        <p>
+            A blog was created to walk new users through the entire WODBrain process from downloading, setting up a profile, and how each of the tools work. The link to the blog will be automatically e-mailed each user the first time they sign in with a new account!
+        </p>
+        <p>What are you waiting for? Let's get this app fully functional!</p>
+        <div class="cntr">
+            <a href="/login">
+                <button type="button" class="btn btn-default">
+                <span class="btn-inner--icon"><i class="fab fa-google"></i></span>
+                <span class="btn-inner--text"> &nbsp; Login</span>
+            </button>
+            </a>
+        </div>
+    </div>
+    <!-- Change Log Block -->
+    <div class="boxy shell shdw" id="ChangeLog">
+        <span class="lgfont">Change Log</span>
+        <hr>
+        <h6>ver 1.0 (2021-May-03)</h6>
+        <p style="padding-left: 0.5rem;">Initial release. WOD Weight functionality added.</p>
+        <h6>ver 1.1 (2021-May-14)</h6>
+        <p style="padding-left: 0.5rem;">Relocated app to self-hosted server.</p>
+        <h6>ver 2.0 (2021-May-25)</h6>
+        <p style="padding-left: 0.5rem;">Feature release. 1RME functionality added.</p>
+        <h6>ver 2.1 (2021-May-27)</h6>
+        <p style="padding-left: 0.5rem;">Added new home screen for mobile app use.</p>
+        <h6>ver 3.0 (2021-June-30)</h6>
+        <p style="padding-left: 0.5rem;">
+            Moved app hosting to its final location: www.wodbrain.app
+            <br>Feature release. Target Weight functionality added.
+            <br>Updated mobile home screen
+        </p>
+        <h6>ver 4.0 (2021-October-28)</h6>
+        <p style="padding-left: 0.5rem;">Implemented user profiles including the ability to log lifts, view all logged lifts, and quickly and easily view 1RME for all movements. Additional implementation to log lifts from each of the WODBrain tool screens.</p>
+    </div>
+    <!-- Bottom Footer Links -->
+    <div class="boxy cntr">
+        <p>
+            <a href="" data-toggle="modal" data-target="#assetModal">Assets</a> ·
+            <a href="https://us1.list-manage.com/contact-form?u=0672977ffc55ae5d676fb2156&form_id=5a2c9ba02cc74e2fb98430b9438a6996 " target="_blank ">Contact</a> ·
+            <a href="https://www.privacypolicies.com/live/8bd99ef7-4b85-4a62-905a-daae13781591 " target="_blank ">Terms of Use</a> ·
+            <a href="https://www.privacypolicies.com/live/dd79f5dc-756c-475b-97cb-e331f0b3d306 " target="_blank ">Privacy</a>
+        </p>
+        <p class="mb-0">© <a href="https://www.cloudbrk.io">Cloudbreak</a> 2022. All Rights Reserved</p>
+    </div>
+</main>
 
 {% include "_footer.html" %}

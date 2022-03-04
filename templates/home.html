@@ -1,0 +1,77 @@
+{% include "_header.html" %}{% include "_analytics.html" %}
+
+<main class="page shell">
+    <!-- Title Block -->
+    <div class="boxy shell shdw ">
+        <img src="{{ url_for('static', filename='img/wodbrain_logo_circ_black.png')}}" style="height: 3rem;" class="img-fluid">
+        <span class="lgfont">
+            &nbsp;Welcome
+        </span>
+        <hr>
+        <p>You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
+        <p class="mb-0">Login with Google below to enhance your app experience, log your lifts, and view your personal records.</p>
+    </div>
+    <!-- How to Download Button -->
+    <a href="/phone">
+        <div class="boxy sand cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-sand">
+                <span class="btn-inner--icon"><i class="fa fa-download mr-2"></i></span>
+                <span class="btn-inner--text">Download</span>
+            </button>
+            </div>
+        </div>
+    </a>
+
+
+
+    <!-- // TODO -  REQUIRES FURTHER DEVELOPMENT, TICKET #WOD-21 -->
+    <!-- Blog/User Guide Button -->
+    <!-- <a href="#">
+        <div class="boxy sand cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-sand">
+                <span class="btn-inner--icon"><i class="fa fa-book mr-2"></i></span>
+                <span class="btn-inner--text">User Guide</span>
+            </button>
+            </div>
+        </div>
+    </a> -->
+
+
+
+    <!-- About Button -->
+    <a href="/about">
+        <div class="boxy sand cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-sand">
+                <span class="btn-inner--icon"><i class="fa fa-info mr-2"></i></span>
+                <span class="btn-inner--text">About</span>
+            </button>
+            </div>
+        </div>
+    </a>
+    <!-- Login Button -->
+    <a href="/login">
+        <div class="boxy egplnt cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-default">
+                <span class="btn-inner--icon"><i class="fab fa-google mr-2"></i></span>
+                <span class="btn-inner--text">Login</span>
+            </button>
+            </div>
+        </div>
+    </a>
+    <!-- Bottom Footer Links -->
+    <div class="boxy cntr">
+        <p>
+            <a href="" data-toggle="modal" data-target="#assetModal">Assets</a> ·
+            <a href="https://us1.list-manage.com/contact-form?u=0672977ffc55ae5d676fb2156&form_id=5a2c9ba02cc74e2fb98430b9438a6996 " target="_blank ">Contact</a> ·
+            <a href="https://www.privacypolicies.com/live/8bd99ef7-4b85-4a62-905a-daae13781591 " target="_blank ">Terms of Use</a> ·
+            <a href="https://www.privacypolicies.com/live/dd79f5dc-756c-475b-97cb-e331f0b3d306 " target="_blank ">Privacy</a>
+        </p>
+        <p class="mb-0">© <a href="https://www.cloudbrk.io">Cloudbreak</a> 2022. All Rights Reserved</p>
+    </div>
+</main>
+
+{% include "_footer.html" %}
