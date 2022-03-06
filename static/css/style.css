@@ -13,11 +13,11 @@
 .boxy-img {
     padding: 0;
     align-self: center;
-    background-color: #000;
 }
 
 .boxy-img img {
     border-radius: 0.5rem;
+    max-width: 500px;
     width: 100%;
 }
 
@@ -118,6 +118,7 @@
 
 .app-bar .app-row {
     width: 100%;
+    max-width: 500px;
     margin: auto;
     padding: 0.25rem;
     font-size: 1.75rem;
@@ -152,6 +153,8 @@
 
 .page {
     width: 100%;
+    max-width: 500px;
+    margin: auto;
     background: #e6ddd6;
     font-family: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #212121;
