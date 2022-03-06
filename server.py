@@ -301,8 +301,6 @@ def logout():
     logout_user()
     return redirect("/mobile")
 
-
-
 # WODBRAIN USER PROFILE
 @app.route("/edit_profile", methods=["GET","POST"])
 @login_is_required
@@ -321,8 +319,8 @@ def edit_profile():
         current_user.age = edit_form.age.data
         current_user.bw = edit_form.bw.data
         db.session.commit()
-        return redirect("/mobile")
-    return(render_template("editprofile.html", page_class="index-page", form=edit_form, name=edit_form.name.data, current_user=current_user))
+        return(render_template("editprofile.html", page_class="index-page", form=edit_form, name=edit_form.name.data, current_user=current_user, editsubmit="yes"))
+    return(render_template("editprofile.html", page_class="index-page", form=edit_form, name=edit_form.name.data, current_user=current_user, editsubmit=""))
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -336,8 +334,8 @@ def profile():
 
 
 # WODBRAIN LOG LIFT INTERACTIONS
-@app.route("/loglift/<lift_id>/<wt>/<reps>", methods=["GET","POST"])
-def loglift(lift_id, wt, reps):
+@app.route("/loglift/<lift_id>/<wt>/<reps>/<liftlogged>", methods=["GET","POST"])
+def loglift(lift_id, wt, reps,liftlogged):
     if reps != "new": # Sent from WodWeight or 1RME will always have reps and load
         logform = LogLiftForm(
             rep = str(reps),
@@ -388,9 +386,9 @@ def loglift(lift_id, wt, reps):
             )
             db.session.add(new_lift)
             db.session.commit()
-            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="yes"))
+            return(redirect("/loglift/new/new/new/yes"))
         else:
-            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged="no"))
+            return(render_template("loglift.html", form=logform, page_class="index-page", current_user=current_user, liftlogged=liftlogged))
     return(redirect("/login"))
 
 @app.route("/editlift/<int:id>", methods=["GET", "POST"])
@@ -461,7 +459,7 @@ def deletelift(id):
 # WODBRAIN ROUTING PAGES
 @app.route("/")
 def home():
-    return render_template("mobile_splash.html", page_class="index-page", current_user=current_user)
+    return redirect("/mobile")
 
 @app.route("/about")
 def about():
@@ -530,7 +528,9 @@ def targets(lift_id, load, lvl):
 
 @app.route("/mobile")
 def mobile():
-    return render_template("mobile_splash.html", page_class="index-page", current_user=current_user)
+    if current_user.is_authenticated:
+        return(redirect("/profile"))
+    return render_template("home.html", page_class="index-page", current_user=current_user)
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -9,12 +9,12 @@ from wtforms.widgets.core import Select
 class WODWeightForm(FlaskForm):
     one_rm = IntegerField("What is your 1RM?",widget=TelInput())
     wod_reps = IntegerField("How many reps is your workout?",widget=TelInput())
-    submit = SubmitField("Calculate WODWeight")
+    submit = SubmitField("Calculate")
 
 class oneRMEForm(FlaskForm):
     multirepload = IntegerField("How much weight did you lift?",widget=TelInput())
     multirep = IntegerField("How many unbroken reps?",widget=TelInput())
-    submit = SubmitField("Calculate 1RME")
+    submit = SubmitField("Calculate")
 
 class LifterProfileForm(FlaskForm):
     sex = RadioField(label="Gender",choices=[('m',"♂ Male"),('f',"♀ Female")])
@@ -46,7 +46,7 @@ class TargetWeightForm(FlaskForm):
             ('14','Bench Press'),
             ]
     )
-    submit = SubmitField("Calculate Targets")
+    submit = SubmitField("Calculate")
 
 class LogLiftForm(FlaskForm):
     movement = SelectField(

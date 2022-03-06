@@ -1,0 +1,69 @@
+{% include "_header.html" %}{% include "_analytics.html" %}
+
+<main class="page shell">
+    <!-- Title Block -->
+    <div class="boxy shell shdw ">
+        <img src="{{ url_for('static', filename='img/wodbrain_logo_circ_black.png')}}" style="height: 3rem;" class="img-fluid">
+        <span class="lgfont">
+            &nbsp;Welcome
+        </span>
+        <hr>
+        <p>You're at the gym to work your muscles, not your brain. Let us handle the mental math!</p>
+        <p class="mb-0">Login with Google below to enhance your app experience, log your lifts, and view your personal records.</p>
+    </div>
+    <!-- How to Download Button -->
+    <a href="/phone">
+        <div class="boxy sand cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-sand">
+                <span class="btn-inner--icon"><i class="fa fa-download mr-2"></i></span>
+                <span class="btn-inner--text">Download</span>
+            </button>
+            </div>
+        </div>
+    </a>
+
+
+
+    <!-- // TODO -  REQUIRES FURTHER DEVELOPMENT, TICKET #WOD-21 -->
+    <!-- Blog/User Guide Button -->
+    <!-- <a href="#">
+        <div class="boxy sand cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-sand">
+                <span class="btn-inner--icon"><i class="fa fa-book mr-2"></i></span>
+                <span class="btn-inner--text">User Guide</span>
+            </button>
+            </div>
+        </div>
+    </a> -->
+
+
+
+    <!-- About Button -->
+    <a href="/about">
+        <div class="boxy sand cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-sand">
+                <span class="btn-inner--icon"><i class="fa fa-info mr-2"></i></span>
+                <span class="btn-inner--text">About</span>
+            </button>
+            </div>
+        </div>
+    </a>
+    <!-- Login Button -->
+    <a href="/login">
+        <div class="boxy egplnt cntr shdw">
+            <div class="cntr">
+                <button type="button" class="btn btn-default">
+                <span class="btn-inner--icon"><i class="fab fa-google mr-2"></i></span>
+                <span class="btn-inner--text">Login</span>
+            </button>
+            </div>
+        </div>
+    </a>
+    <!-- Bottom Footer Links -->
+    {% include "_genericdetails.html" %}
+</main>
+
+{% include "_footer.html" %}
