@@ -241,6 +241,7 @@ th {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
     text-align: center;
+    font-weight: 300;
 }
 
 td {
@@ -8322,6 +8323,10 @@ button.bg-darker:focus {
 
 .w-75 {
     width: 75% !important;
+}
+
+.w-95 {
+    width: 95% !important;
 }
 
 .w-100 {
@@ -22730,9 +22735,19 @@ pre>code.highlight {
 .profile-table tr td {
     border: 1px solid #49274a;
     min-width: 0;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 300;
     line-height: 1.5;
+}
+
+.skinny-row {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.skinny-col {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .masthead {

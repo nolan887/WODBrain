@@ -1,207 +1,160 @@
 {% include "_header.html" %} {% include "_analytics.html" %} {% import "bootstrap/wtf.html" as wtf %}
 
-<div class="section section-components section-shaped pb-10 " style="color: #f4f5f7;">
-    <div class="shape shape-style-1 shape-primary">
-        <span class="span-150"></span>
-        <span class="span-50"></span>
-        <span class="span-50"></span>
-        <span class="span-75"></span>
-        <span class="span-100"></span>
-        <span class="span-75"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-    </div>
-    <div class="container" style="height: 110px;">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <h2 style="color: #f4f5f7;">Lifter Profile</h2>
+<main class="page shell">
+    <!-- Title Block -->
+    <div class="boxy shell shdw ">
+        {% if current_user.sex == 'm' %}
+        <img src="{{url_for('static', filename='img/lion.jpeg')}}" class="rounded-circle img-fluid" style="height:3rem;"> {% else %}
+        <img src="{{url_for('static', filename='img/lioness.jpeg')}}" class="rounded-circle img-fluid" style="height:3rem;"> {% endif %}
+        <span class="lgfont">
+            &nbsp; {{current_user.name}}
+        </span>
+        <hr>
+        <!-- User Details Section -->
+        <div class="row cntr">
+            <div class="col">
+                <span class="mdfont">{{ current_user.age }}</span><br>
+                <span class="smfont">years</span>
+            </div>
+            <div class="col">
+                <span class="mdfont">{{ current_user.sex }}</span><br>
+                <span class="smfont">sex</span>
+            </div>
+            <div class="col">
+                <span class="mdfont">{{ current_user.bw }}</span><br>
+                <span class="smfont">lbs</span>
+            </div>
+        </div>
+        <hr>
+        <!-- Profile Buttons Section -->
+        <div class="row cntr">
+            <div class="col">
+                <a class="btn btn-outline-primary btn-sm shdw" href="/logout"><i class="fas fa-sign-out-alt fa-fw mr-2"></i> Logout</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-primary btn-sm shdw" href="/edit_profile"><i class="fas fa-user-edit fa-fw mr-2"></i> Edit Profile</a>
             </div>
         </div>
     </div>
-</div>
-<div class="wrapper">
-    <section class="section-profile-cover bg-secondary"></section>
-    <section class="section bg-secondary">
-        <div class="container">
-            <div class="card card-profile shadow mt--250">
-                <div class="px-4">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 order-lg-2">
-                            <div class="card-profile-image">
-                                <!-- TO DO: IF STATEMENT FOR CORRECT LION BASED ON USER SEX -->
-                                <img src="{{url_for('static', filename='img/lion.jpeg')}}" class="rounded-circle">
-                                <!-- <img src="{{url_for('static', filename='img/lioness.jpeg')}}" class="rounded-circle"> -->
-                            </div>
+    <!-- PR Block -->
+    <div class="boxy shell shdw">
+        <span class="lgfont">Personal Records</span>
+        <hr class="mt-0">
+        <!-- TABLE TO DISPLAY USER PR's -->
+        <table class="profile-table" style="margin: auto;">
+            {% for name in liftcatalog: %}
+            <tr>
+                <td>
+                    <!-- Lift Name -->
+                    <span>{{ name }}</span>
+                    <!-- Include Lift Level (If Available) -->
+                    {% if not pr_journal[name]['onerm'] == 0 %} <br> <span class="smfont"> Level {{ pr_journal[name]['level'] }} </span> {% endif %}
+                </td>
+                <!-- NO LIFT LOGGED -->
+                {% if pr_journal[name]['onerm'] == 0 %}
+                <td>
+                    <span class="smfont">No Lift Logged</span>
+                </td>
+                <!-- YES LIFT IN JOURNAL -->
+                {% else %}
+                <td>
+                    <!-- 1RM or 1RME -->
+                    <span>{{ pr_journal[name]['onerm'] }}#</span>
+                    <!-- Rep x Weight if not true 1RM -->
+                    {% if pr_journal[name]['actual'] == False %}
+                    <br><span class="smfont">({{ pr_journal[name]['rep'] }} x {{ pr_journal[name]['load'] }})</span> {% endif %}
+                </td>
+                {% endif %}
+                <td>
+                    <div class="row skinny-row">
+                        <!-- Target Weight Shortcut -->
+                        <div class="col skinny-col">
+                            <a href="/targets/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}/{{ pr_journal[name]['level'] }}"><i class="fas fa-bullseye fa-fw"></i></a>
                         </div>
-                        <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
-                            <div class="card-profile-actions py-4 mt-lg-0">
-                                <a href="/edit_profile" class="btn btn-sm btn-outline-primary mr-4"><i class="fas fa-user-edit"></i> Edit Profile</a>
-                                <a href="/loglift/new/new/new/no" class="btn btn-sm btn-outline-primary float-right"><i class="far fa-plus-square"></i> Log Lift</a>
-                            </div>
+                        <!-- Log Lift Button -->
+                        <div class="col skinny-col">
+                            <a href="/loglift/{{liftnumbers[name]}}/new/new/no"><i class="far fa-plus-square"></i></a>
                         </div>
-                        <div class="col-lg-4 order-lg-1">
-                            <div class="card-profile-stats d-flex justify-content-center">
-                                <div>
-                                    <span class="heading">{{ current_user.age }}</span>
-                                    <span class="description">years</span>
-                                </div>
-                                <div>
-                                    <span class="heading">{{ current_user.sex }}</span>
-                                    <span class="description">sex</span>
-                                </div>
-                                <div>
-                                    <span class="heading">{{ current_user.bw }}</span>
-                                    <span class="description">lbs</span>
-                                </div>
-                            </div>
+                        {% if pr_journal[name]['onerm'] != 0 %}
+                        <!-- WOD Weight Shortcut (Only for Lifts in Journal) -->
+                        <div class="col skinny-col">
+                            <a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator fa-fw"></i> </a>
                         </div>
+                        {% endif %}
                     </div>
-                    <div class="mt-4 text-center">
-                        <h2> {{ current_user.name }} </h2>
-                    </div>
-                    <div class="py-4 border-top text-center">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-9">
-                                <!-- TABLE TO DISPLAY USER PR's -->
-                                <table class="profile-table mb-5" style="margin: auto;">
-                                    <tr>
-                                        <th colspan="4" style="text-align: center;">
-                                            <h4>Personal Records</h4>
-                                        </th>
-                                    </tr>
-                                    {% for name in liftcatalog: %}
-                                    <tr>
-                                        <td>
-                                            {{name}}
-                                        </td>
-                                        {% if pr_journal[name]['onerm'] == 0 %}
-                                        <td>
-                                            <span class="small">No Lift Logged</span>
-                                        </td>
-                                        <td>
-                                            <span class="small"> -- </span>
-                                        </td>
-                                        <td>
-                                            <a href="/loglift/{{liftnumbers[name]}}/new/new/no"><i class="far fa-plus-square"></i></a>
-                                        </td>
-                                        {% else %}
-                                        <td>
-                                            {{ pr_journal[name]['onerm'] }}# {% if pr_journal[name]['actual'] == False %}
-                                            <br><span class="small">({{ pr_journal[name]['rep'] }} x {{ pr_journal[name]['load'] }})</span> {% endif %}
-                                        </td>
-                                        <td>
-                                            <span class="small"> Level {{ pr_journal[name]['level'] }} </span>
-                                        </td>
-                                        <td>
-                                            <a href="/targets/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}/{{ pr_journal[name]['level'] }}"><i class="fas fa-bullseye"></i></a>
-                                            <br><a href="/wodweight/{{ liftnumbers[name] }}/{{ pr_journal[name]['onerm'] }}"><i class="fas fa-calculator"></i> </a>
-                                        </td>
-                                        {% endif %}
-                                    </tr>
-                                    {% endfor %}
-                                    <tr>
-                                        <th colspan="4" style="text-align: center;">
-                                            <br><span class="btn btn-primary btn-icon mb-3 mb-sm-0" data-toggle="modal" data-target="#modal-level-dfn">
-                                                <span class="btn-inner--text">Define Levels</span>
-                                            </span>
-                                        </th>
-                                    </tr>
-                                </table>
-                                <div class="py-4 text-center border-top">
-                                    <h4> All Logged Lifts </h4>
-                                </div>
-                                <!-- ACCORDIAN WITH ALL USER LIFTS -->
-                                <div class="accordion-1">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-12 ">
-                                                <div class="accordion" id="alllifts" style="margin: auto;">
-                                                    {% for name in liftcatalog: %}
-                                                    <div class="card">
-                                                        <div class="card-header" id="heading{{liftnumbers[name]}}">
-                                                            <h5 class="mb-0">
-                                                                <button class="btn btn-link w-100 text-primary text-left" type="button" data-toggle="collapse" data-target="#data{{liftnumbers[name]}}" aria-expanded="false" aria-controls="data{{liftnumbers[name]}}">
-                                                                    {{ name }} <i class="fas fa-chevron-down float-right"></i>
-                                                                </button>
-                                                            </h5>
-                                                        </div>
-                                                        <div id="data{{liftnumbers[name]}}" class="collapse" aria-labelledby="heading{{liftnumbers[name]}}" data-parent="#alllifts">
-                                                            <div class="card-body opacity-8" style="padding-left: 0; padding-right: 0;">
-                                                                {% if liftdata[name]: %}
-                                                                <table class="profile-table" style="margin: auto;">
-                                                                    <tr>
-                                                                        <th>One RM</th>
-                                                                        <th>Date</th>
-                                                                        <th>Action</th>
-                                                                    </tr>
-                                                                    {% for entry in liftdata[name]: %}
-                                                                    <tr>
-                                                                        <td>
-                                                                            {{ liftdata[name][entry]['onerm'] }}#{% if liftdata[name][entry]['actual'] != True: %} <span class="small">({{ liftdata[name][entry]['rep'] }} x {{ liftdata[name][entry]['load'] }})</span>                                                                            {% endif %}
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="small">{{ liftdata[name][entry]['date'] }}</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a href="/editlift/{{entry}}"><i class="far fa-edit"></i></a> &nbsp;&nbsp; <a href="/xlift/{{entry}}"><i class="far fa-trash-alt"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    {% endfor %}
-                                                                </table>
-                                                                <span>
-                                                                    {% else %}
-                                                                    No lifts logged for {{ name }}
-                                                                    {%endif%}
-                                                                </span>
-                                                                <div class="pt-3">
-                                                                    <a href="/loglift/{{liftnumbers[name]}}/new/new/no" class="btn btn-sm btn-outline-primary"><i class="far fa-plus-square"></i> Log Lift</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
+                </td>
+            </tr>
+            {% endfor %}
+            <!-- Lifter Definition Modal -->
+            <tr>
+                <th colspan="3" class="cntr">
+                    <br><span class="btn btn-outline-default shdw btn-sm mb-3 mb-sm-0" data-toggle="modal" data-target="#levelDefinitionModal">
+                        <span class="btn-inner--text">Define Levels</span>
+                    </span>
+                </th>
+            </tr>
+        </table>
+    </div>
+    <!-- All Lifts Block -->
+    <div class="boxy shell shdw">
+        <span class="lgfont">Lift Journal</span>
+        <hr class="mt-0">
+        <div class="accordion" id="alllifts" style="margin: auto;">
+            {% for name in liftcatalog: %}
+            <div class="card shell">
+                <div id="heading{{liftnumbers[name]}}">
+                    <h5 class="mb-0">
+                        <button class="btn w-100 text-default text-left" type="button" data-toggle="collapse" data-target="#data{{liftnumbers[name]}}" aria-expanded="false" aria-controls="data{{liftnumbers[name]}}">
+                            {{ name }} <i class="fas fa-chevron-down float-right"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div id="data{{liftnumbers[name]}}" class="collapse bg-lt-blur" aria-labelledby="heading{{liftnumbers[name]}}" data-parent="#alllifts">
+                    <div class="card-body" style="padding-left: 0; padding-right: 0;">
+                        {% if liftdata[name]: %}
+                        <table class="profile-table w-95" style="margin: auto;">
+                            {% for entry in liftdata[name]: %}
+                            <tr>
+                                <td>
+                                    <!-- 1RM -->
+                                    {{ liftdata[name][entry]['onerm'] }}#
+                                    <!-- Rep x Load if  not True 1RM -->
+                                    {% if liftdata[name][entry]['actual'] != True: %} <span class="smfont">({{ liftdata[name][entry]['rep'] }} x {{ liftdata[name][entry]['load'] }})</span> {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Lift Date -->
+                                    <span class="smfont">{{ liftdata[name][entry]['date'].strftime("'%y - %b %d") }}</span>
+                                </td>
+                                <td>
+                                    <div class="row skinny-row">
+                                        <!-- Target Weight Shortcut -->
+                                        <div class="col skinny-col">
+                                            <a href="/editlift/{{entry}}"><i class="far fa-edit fa-fw"></i></a>
+                                        </div>
+                                        <!-- Target Weight Shortcut -->
+                                        <div class="col skinny-col">
+                                            <a href="/xlift/{{entry}}"><i class="far fa-trash-alt fa-fw"></i></a>
                                         </div>
                                     </div>
-                                </div>
-                                <p>
-                                    <a href="/logout" id="logout-profile" class="btn btn-outline-primary mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="modal fade" id="modal-level-dfn" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
-                    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h6 class="modal-title" id="modal-title-default">Lifter Level Definitions</h6>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                                <p><span style="font-weight: bold;">Level I:</span> Stronger than 5% of lifters. A beginner lifter can perform the movement correctly and has practiced it for at least a month.</p>
-                                <p><span style="font-weight: bold;">Level II:</span> Stronger than 20% of lifters. A novice lifter has trained regularly in the technique for at least six months.</p>
-                                <p><span style="font-weight: bold;">Level III:</span> Stronger than 50% of lifters. An intermediate lifter has trained regularly in the technique for at least two years.</p>
-                                <p><span style="font-weight: bold;">Level IV:</span> Stronger than 80% of lifters. An advanced lifter has progressed for over five years.</p>
-                                <p><span style="font-weight: bold;">Level V:</span> Stronger than 95% of lifters. An elite lifter has dedicated over five years to become competitive at strength sports.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default ml-auto" data-dismiss="modal">OK</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
 
-    {% include "_footer.html" %}
+                        {% else %}
+                        <div class="cntr">
+                            No lifts logged for {{ name }}
+                        </div> {%endif%}
+
+                        <div class="pt-3 cntr">
+                            <a href="/loglift/{{liftnumbers[name]}}/new/new/no" class="btn btn-sm btn-default shdw"><i class="far fa-plus-square fa-fw mr-2"></i> Log Lift</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+{% include "_footer.html" %}

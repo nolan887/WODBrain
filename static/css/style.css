@@ -22,7 +22,7 @@
 }
 
 .sand {
-    color: #251425;
+    color: #49274a;
     background-color: #f4dec8;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .shell {
-    color: #251425;
+    color: #49274a;
     background-color: #f8eee7;
 }
 
@@ -75,10 +75,26 @@
     font-weight: 300;
     vertical-align: middle;
     color: #49274a;
+    text-transform: uppercase;
+}
+
+.smfont {
+    font-size: 0.75rem;
+    font-weight: 300;
+    vertical-align: middle;
+    color: #49274a;
+}
+
+.thicc {
+    font-weight: 400;
 }
 
 .bg-blur {
     background-color: rgba(0, 0, 0, .5);
+}
+
+.bg-lt-blur {
+    background-color: rgba(0, 0, 0, .03);
 }
 
 .app-bar {
