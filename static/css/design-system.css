@@ -2815,7 +2815,7 @@ fieldset:disabled a.btn {
 
 .btn-default:hover {
     color: #fff;
-    background-color: #401564;
+    background-color: #49274a;
     border-color: #0b1526;
 }
 
@@ -2835,7 +2835,7 @@ fieldset:disabled a.btn {
 .btn-default:not(:disabled):not(.disabled).active,
 .show>.btn-default.dropdown-toggle {
     color: #fff;
-    background-color: #0b1526;
+    background-color: #49274a;
     border-color: #08101c;
 }
 
