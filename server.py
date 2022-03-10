@@ -263,7 +263,7 @@ def callback():
         g_userid = session.get('google_id')
         existing_user = User.query.get(g_userid)
         login_user(existing_user)
-        return redirect("/mobile")
+        return redirect("/load/mobile")
     else:
         # NOT IN DATABASE / NEW USER
         new_id = str(session["google_id"])
@@ -293,7 +293,7 @@ def callback():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        return redirect("/edit_profile")
+        return redirect("/load/edit_profile")
 
 @app.route("/logout")
 def logout():
@@ -331,6 +331,10 @@ def profile():
         return(render_template("profile.html", page_class="profile-page", current_user=current_user, liftcatalog=liftcatalog, liftdata=current_journal, pr_journal=pr_journal, liftnumbers=lift_dict_map))
     return(redirect("/login"))
 
+# Loading Screen
+@app.route("/load/<destination>")
+def load(destination):
+    return(render_template("loading.html", pagetoload=destination))
 
 
 # WODBRAIN LOG LIFT INTERACTIONS
@@ -436,7 +440,7 @@ def editlift(id):
             db.session.add(new_lift)
             db.session.delete(lift_to_edit)
             db.session.commit()
-            return(redirect("/profile"))
+            return(redirect("/load/profile"))
         return(render_template("editlift.html", form=editform, page_class="index-page", current_user=current_user))
     return(redirect("/login"))
 
@@ -452,7 +456,7 @@ def deletelift(id):
         lift_to_delete = LiftData.query.get(id)
         db.session.delete(lift_to_delete)
         db.session.commit()
-        return(redirect("/profile"))
+        return(redirect("/load/profile"))
     return(redirect("/login"))
 
 
@@ -529,7 +533,7 @@ def targets(lift_id, load, lvl):
 @app.route("/mobile")
 def mobile():
     if current_user.is_authenticated:
-        return(redirect("/profile"))
+        return(redirect("/load/profile"))
     return render_template("home.html", page_class="index-page", current_user=current_user)
 
 @app.errorhandler(404)

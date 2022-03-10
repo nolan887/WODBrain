@@ -1,0 +1,16 @@
+{% include "_header.html" %}{% include "_analytics.html" %}
+<main class="page">
+    <!-- Loading Modal -->
+    <div class="modal fade bg-blur cntr" id="modal-loading" tabindex="-1" aria-labelledby="assetModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <p class="cntr"><img src="{{ url_for('static', filename='img/loading.gif')}}" style="width: 400px; max-width:100%;">
+                <span class="lgfont" style="display: block;">Processing</span></p>
+        </div>
+    </div>
+    <!-- Load the Actual Page -->
+    <script>
+        window.location.replace('/{{ pagetoload }}');
+    </script>
+
+</main>
+{% include "_footer.html" %}
